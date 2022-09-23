@@ -2,7 +2,6 @@
 @section('title', trans('FAQ'))
 
 @section('content')
-
     <!-- faq section -->
     <section class="faq-section faq-page">
         <div class="container">
@@ -74,8 +73,4 @@
            @endif
         </div>
      </section>
-
 @endsection
-
-
-{{-- @include($theme.'sections.faq') --}}

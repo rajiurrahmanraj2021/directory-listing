@@ -24,14 +24,12 @@
                         <th scope="col">@lang('Category')</th>
                         <th scope="col">@lang('Author')</th>
                         <th scope="col">@lang('Title')</th>
-                        <th scope="col">@lang('Details')</th>
                         {{-- <th scope="col">@lang('Image')</th> --}}
                         <th scope="col">@lang('Action')</th>
                     </tr>
                     </thead>
                     <tbody>
                     @forelse($blogs as $blog)
-
                         <tr>
                             <td data-label="@lang('SL No.')">{{$loop->index+1}}</td>
                             <td data-label="@lang('Category')">
@@ -46,19 +44,19 @@
                                 @lang(@$blog->details->title)
                             </td>
 
-                            <td data-label="@lang('Category')">
-                                @lang(@$blog->details->details)
-                            </td>
+                            {{-- <td data-label="@lang('Image')">
+                                <img src="{{ getFile(config('location.blog.path').(isset($blog->image) ? $blog->image : '')) }}" alt="@lang('not found')" width="100" height="50">
+                            </td> --}}
 
                             <td data-label="@lang('Action')">
                                 <button class="btn btn-sm btn-primary edit-button" type="button">
-                                    <a href="#" class="text-white">
+                                    <a href="{{ route('admin.blogEdit',$blog->id) }}" class="text-white">
                                         <i class="fa fa-edit" aria-hidden="true"></i> @lang('Edit')
                                     </a>
                                 </button>
 
                                 <a href="javascript:void(0)"
-                                    data-route="#"
+                                    data-route="{{ route('admin.blogDelete',$blog->id) }}"
                                     data-toggle="modal"
                                     data-target="#delete-modal"
                                     class="btn btn-danger btn-sm notiflix-confirm"><i class="fas fa-trash"></i> @lang('Delete')

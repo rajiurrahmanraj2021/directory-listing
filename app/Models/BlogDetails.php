@@ -16,7 +16,7 @@ class BlogDetails extends Model
         'details' => 'object'
     ];
 
-    public function get_blog(){
+    public function blog(){
         return $this->belongsTo(Blog::class, 'blog_id');
     }
     

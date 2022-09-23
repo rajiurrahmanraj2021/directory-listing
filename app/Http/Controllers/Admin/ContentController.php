@@ -7,6 +7,7 @@ use App\Http\Traits\Upload;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogCategoryDetails;
+use App\Models\BlogDetails;
 use App\Models\Content;
 use App\Models\ContentDetails;
 use App\Models\ContentMedia;
@@ -50,7 +51,7 @@ class ContentController extends Controller
         $purifiedData = Purify::clean($request->except('image', 'thumbnail', '_token', '_method'));
 
         if ($request->has('image')) {
-            $purifiedData['image'] = $request->image;
+            $purifiedData['image']     = $request->image;
         }
         if ($request->has('thumbnail')) {
             $purifiedData['thumbnail'] = $request->thumbnail;
@@ -70,14 +71,14 @@ class ContentController extends Controller
         }
 
         // save content for the first time
-        $contentModel = new Content();
+        $contentModel       = new Content();
         $contentModel->name = $content;
         $contentModel->save();
 
         // save content details on any language
         if ($language != 0) {
-            $contentDetails = new ContentDetails();
-            $contentDetails->content_id = $contentModel->id;
+            $contentDetails              = new ContentDetails();
+            $contentDetails->content_id  = $contentModel->id;
             $contentDetails->language_id = $language;
             $contentDetails->description = $description ? : null;
             $contentDetails->save();
@@ -89,10 +90,10 @@ class ContentController extends Controller
 
             foreach (config('contents.content_media') as $key => $media) {
                 if ($request->hasFile($key)) {
-                    $size =  null;
+                    $size  =  null;
                     $thumb =  null;
                     if(config("contents.$content.size.image")){
-                        $size = config("contents.$content.size.image");
+                        $size  = config("contents.$content.size.image");
                     }
                     if(config("contents.$content.size.thumb")){
                         $thumb = config("contents.$content.size.thumb");
@@ -105,7 +106,7 @@ class ContentController extends Controller
             }
 
 
-            $contentMedia->content_id = $contentModel->id;
+            $contentMedia->content_id  = $contentModel->id;
             $contentMedia->description = $contentMediaDescription ?? null;
             $contentMedia->save();
         }
@@ -119,10 +120,9 @@ class ContentController extends Controller
             abort(404);
         }
 
-        $languages = Language::all();
+        $languages      = Language::all();
         $contentDetails = ContentDetails::where('content_id', $content->id)->get()->groupBy('language_id');
-        $contentMedia = ContentMedia::where('content_id', $content->id)->first();
-
+        $contentMedia   = ContentMedia::where('content_id', $content->id)->first();
 
         return view('admin.content.show', compact('content', 'languages', 'contentDetails', 'contentMedia'));
     }
@@ -155,8 +155,8 @@ class ContentController extends Controller
         }
 
         if ($language != 0) {
-            $contentDetails = ContentDetails::where(['content_id' => $content->id, 'language_id' => $language])->firstOrNew();
-            $contentDetails->content_id = $content->id;
+            $contentDetails              = ContentDetails::where(['content_id' => $content->id, 'language_id' => $language])->firstOrNew();
+            $contentDetails->content_id  = $content->id;
             $contentDetails->language_id = $language;
             $contentDetails->description = $description ?? null;
             $contentDetails->save();
@@ -169,9 +169,9 @@ class ContentController extends Controller
             $contentMedia = ContentMedia::where(['content_id' => $content->id])->firstOrNew();
 
             foreach (config('contents.content_media') as $key => $media) {
-                $old_data = optional($contentMedia->description)->{$key} ?? null;
+                $old_data  = optional($contentMedia->description)->{$key} ?? null;
                 if ($request->hasFile($key)) {
-                    $size =  null;
+                    $size  =  null;
                     $thumb =  null;
                     if(config("contents.$content->name.size.image")){
                         $size = config("contents.$content->name.size.image");
@@ -190,7 +190,7 @@ class ContentController extends Controller
 
 
 
-            $contentMedia->content_id = $content->id;
+            $contentMedia->content_id  = $content->id;
             $contentMedia->description = $contentMediaDescription ?? null;
             $contentMedia->save();
         }
@@ -239,7 +239,7 @@ class ContentController extends Controller
 
         $blogCategory->details()->create([
             'language_id' => $language,
-            'name' => $purifiedData["name"][$language],
+            'name'        => $purifiedData["name"][$language],
         ]);
 
         return redirect()->route('admin.blogCategory')->with('success', 'Blog Category Successfully Saved');
@@ -247,7 +247,7 @@ class ContentController extends Controller
     }
 
     public function blogCategoryEdit($id){
-        $languages = Language::all();
+        $languages           = Language::all();
         $blogCategoryDetails = BlogCategoryDetails::with('category')->where('blog_category_id', $id)->get()->groupBy('language_id');
         return view('admin.blog.blogCategoryEdit', compact('languages', 'blogCategoryDetails', 'id'));
     }
@@ -296,8 +296,8 @@ class ContentController extends Controller
     }
 
     public function blogCreate(){
-        $languages = Language::all();
-        $data['blogCategory'] = BlogCategory::with('details')->get();
+        $languages              = Language::all();
+        $data['blogCategory']   = BlogCategory::with('details')->get();
         return view('admin.blog.blogCreate',$data, compact('languages'));
     }
 
@@ -314,18 +314,18 @@ class ContentController extends Controller
 
         $rules = [
             'blog_category_id' => 'required',
-            'author.*' => 'required|max:50',
-            'title.*' => 'required|max:191',
-            'details.*' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png'
+            'author.*'         => 'required|max:50',
+            'title.*'          => 'required|max:191',
+            'details.*'        => 'required',
+            'image'            => 'required|mimes:jpg,jpeg,png'
         ];
         $message = [
-            'blog_category_id.required' => 'Please select blog category',
-            'author.*.max' => 'This field may not be greater than :max characters',
-            'author.*.required' => 'This field is required',
-            'title.*.required' => 'This field is required',
-            'details.*.required' => 'This field is required',
-            'image.required' => 'Image is required'
+            'blog_category_id.required'   => 'Please select blog category',
+            'author.*.max'                => 'This field may not be greater than :max characters',
+            'author.*.required'           => 'This field is required',
+            'title.*.required'            => 'This field is required',
+            'details.*.required'          => 'This field is required',
+            'image.required'              => 'Image is required'
         ];
 
         $validate = Validator::make($purifiedData, $rules, $message);
@@ -334,7 +334,6 @@ class ContentController extends Controller
             return back()->withInput()->withErrors($validate);
         }
     
-
         $blog = new Blog();
         
         $blog->blog_category_id = $request->blog_category_id;
@@ -355,13 +354,92 @@ class ContentController extends Controller
 
         $blog->details()->create([
         
-            'language_id' => $language,
-            'author' => $purifiedData["author"][$language],
-            'title' => $purifiedData["title"][$language],
-            'details' => $purifiedData["details"][$language],
+            'language_id'   => $language,
+            'author'        => $purifiedData["author"][$language],
+            'title'         => $purifiedData["title"][$language],
+            'details'       => $purifiedData["details"][$language],
         ]);
 
         return redirect()->route('admin.blogList')->with('success', 'Blog Successfully Saved');
+    }
+
+    public function blogEdit($id)
+    {
+        $languages    = Language::all();
+        $blogDetails  = BlogDetails::with('blog')->where('blog_id', $id)->get()->groupBy('language_id');
+        $blogCategory = BlogCategory::with('details')->get();
+
+        return view('admin.blog.blogEdit', compact('languages', 'blogDetails', 'blogCategory', 'id'));
+    }
+
+    public function blogUpdate(Request $request, $id, $language_id)
+    {
+        $purifiedData = Purify::clean($request->except('image', '_token', '_method'));
+
+        if ($request->has('image')) {
+            $purifiedData['image'] = $request->image;
+        }
+
+        $rules = [
+            'blog_category_id'   => 'required',
+            'author.*'           => 'required|max:50',
+            'title.*'            => 'required|max:191',
+            'details.*'          => 'required',
+            'image'              => 'required|mimes:jpg,jpeg,png'
+        ];
+        $message = [
+            'blog_category_id.required'  => 'Please select blog category',
+            'author.*.max'               => 'This field may not be greater than :max characters',
+            'author.*.required'          => 'This field is required',
+            'title.*.required'           => 'This field is required',
+            'details.*.required'         => 'This field is required',
+            'image.required'             => 'Image is required'
+        ];
+
+        $validate = Validator::make($purifiedData, $rules, $message);
+
+        if ($validate->fails()) {
+            return back()->withInput()->withErrors($validate);
+        }
+
+        $blog = Blog::findOrFail($id);
+        $blog->blog_category_id = $request->blog_category_id;
+
+        if ($request->hasFile('image')) {
+            try {
+                $blog->image = $this->uploadImage($purifiedData['image'], config('location.blog.path'), config('location.blog.size'), $blog->image);
+            } catch (\Exception $exp) {
+                return back()->with('error', 'Image could not be uploaded.');
+            }
+        }
+
+        $blog->save();
+
+        $blog->details()->updateOrCreate([
+            'language_id'   => $language_id
+        ],
+            [
+                'author'    => $purifiedData["author"][$language_id],
+                'title'     => $purifiedData["title"][$language_id],
+                'details'   => $purifiedData["details"][$language_id],
+            ]
+        );
+        return redirect()->route('admin.blogList')->with('success', 'Blog Successfully Updated');
+
+    }
+
+    public function blogDelete($id)
+    {
+        $blog      = Blog::findOrFail($id);
+        $old_image = $blog->image;
+        $location  = config('location.blog.path');
+
+        if (!empty($old_image)) {
+            unlink($location . '/' . $old_image);
+        }
+
+        $blog->delete();
+        return back()->with('success', 'Blog has been deleted');
     }
 
 }

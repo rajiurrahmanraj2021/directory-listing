@@ -6,7 +6,6 @@
 @endsection
 
 @section('content')
-
      <section class="listing-section">
         <div class="container-fluid">
            <div class="row">
@@ -371,5 +370,4 @@
            </div>
         </div>
      </section>
-
 @endsection

@@ -287,6 +287,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('blog-list', 'Admin\ContentController@blogList')->name('blogList');
         Route::get('blog-create', 'Admin\ContentController@blogCreate')->name('blogCreate');
         Route::post('blog-store/{language?}', 'Admin\ContentController@blogStore')->name('blogStore');
+        Route::get('blog-edit/{id}', 'Admin\ContentController@blogEdit')->name('blogEdit');
+        Route::put('blog-update/{id}/{language?}', 'Admin\ContentController@blogUpdate')->name('blogUpdate');
+        Route::delete('blog-delete/{id}', 'Admin\ContentController@blogDelete')->name('blogDelete');
 
 
 
@@ -318,19 +321,14 @@ Route::get('/pricing', 'FrontendController@pricing')->name('pricing');
 Route::get('/listing', 'FrontendController@listing')->name('listing');
 Route::get('/listing-details', 'FrontendController@listing_details')->name('listing-details');
 Route::get('/blog', 'FrontendController@blog')->name('blog');
-Route::get('/blog-details', 'FrontendController@blog_details')->name('blog-details');
-// Route::get('/blog-details/{slug}/{id}', 'FrontendController@blogDetails')->name('blogDetails');
+Route::get('/blog-details/{slug}/{id}', 'FrontendController@blogDetails')->name('blogDetails');
+
+
+
 Route::get('/contact', 'FrontendController@contact')->name('contact');
-
-
-
 Route::get('/faq', 'FrontendController@faq')->name('faq');
-
-
 Route::post('/contact', 'FrontendController@contactSend')->name('contact.send');
-
 Route::post('/subscribe', 'FrontendController@subscribe')->name('subscribe');
-
 Route::get('/{getLink}/{content_id}', 'FrontendController@getLink')->name('getLink');
 
 

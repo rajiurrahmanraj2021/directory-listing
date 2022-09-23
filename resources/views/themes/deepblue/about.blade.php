@@ -29,7 +29,6 @@
                            <h3>@lang(@$about_us->description->sub_title)</h3>
                         </div>
                         <div>
-                           {{-- @lang(@$about_us->description->description) --}}
                            {!! $about_us->description->description !!}
                         </div>
                         

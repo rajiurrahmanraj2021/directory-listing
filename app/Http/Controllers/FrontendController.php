@@ -7,6 +7,9 @@ use App\Models\Language;
 use App\Models\Template;
 use App\Models\Subscriber;
 use App\Http\Traits\Notify;
+use App\Models\Blog;
+use App\Models\BlogCategory;
+use App\Models\BlogCategoryDetails;
 use Illuminate\Http\Request;
 use App\Models\ContentDetails;
 use Stevebauman\Purify\Facades\Purify;
@@ -23,10 +26,11 @@ class FrontendController extends Controller
 
     public function index()
     {
-        $templateSection = ['banner-heading','hero', 'about-us', 'why-chose-us', 'how-it-work', 'how-we-work', 'know-more-us', 'deposit-withdraw', 'news-letter', 'news-letter-referral', 'testimonial', 'request-a-call', 'investor', 'blog', 'faq', 'we-accept', 'investment'];
-        $data['templates'] = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
+        $templateSection        = ['banner-heading','hero', 'about-us', 'why-chose-us', 'how-it-work', 'how-we-work', 'know-more-us', 'deposit-withdraw', 'news-letter', 'news-letter-referral', 'testimonial', 'request-a-call', 'investor', 'blog', 'faq', 'we-accept', 'investment'];
+        $data['templates']      = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
 
-        $contentSection = ['team-member','feature', 'why-chose-us', 'how-it-work', 'how-we-work', 'know-more-us', 'testimonial', 'investor', 'blog', 'faq'];
+        $contentSection         = ['team-member','feature', 'why-chose-us', 'how-it-work', 'how-we-work', 'know-more-us', 'testimonial', 'investor', 'blog', 'faq'];
+
         $data['contentDetails'] = ContentDetails::select('id', 'content_id', 'description', 'created_at')
             ->whereHas('content', function ($query) use ($contentSection) {
                 return $query->whereIn('name', $contentSection);
@@ -44,11 +48,12 @@ class FrontendController extends Controller
     public function about()
     {
 
-        $templateSection = ['testimonial', 'about-us', 'investor', 'faq', 'we-accept', 'how-it-work', 'how-we-work', 'know-more-us'];
-        $data['templates'] = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
+        $templateSection           = ['testimonial', 'about-us', 'investor', 'faq', 'we-accept', 'how-it-work', 'how-we-work', 'know-more-us'];
+        $data['templates']         = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
 
-        $contentSection = ['testimonial', 'feature', 'why-chose-us', 'investor', 'faq', 'how-it-work', 'how-we-work', 'know-more-us'];
-        $data['contentDetails'] = ContentDetails::select('id', 'content_id', 'description', 'created_at')
+        $contentSection            = ['testimonial', 'feature', 'why-chose-us', 'investor', 'faq', 'how-it-work', 'how-we-work', 'know-more-us'];
+        $data['contentDetails']    = ContentDetails::select('id', 'content_id', 'description', 'created_at')
+
             ->whereHas('content', function ($query) use ($contentSection) {
                 return $query->whereIn('name', $contentSection);
             })
@@ -76,74 +81,31 @@ class FrontendController extends Controller
 
     public function blog()
     {
-        $data['title'] = "Blog";
-        $contentSection = ['blog'];
-
-        $templateSection = ['blog'];
-        $data['templates'] = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
-
-        $data['contentDetails'] = ContentDetails::select('id', 'content_id', 'description', 'created_at')
-            ->whereHas('content', function ($query) use ($contentSection) {
-                return $query->whereIn('name', $contentSection);
-            })
-            ->with(['content:id,name',
-                'content.contentMedia' => function ($q) {
-                    $q->select(['content_id', 'description']);
-                }])
-            ->get()->groupBy('content.name');
+        $data['allBlogs']     = Blog::with('details')->latest()->get();
+        $data['blogCategory'] = BlogCategory::with('details')->latest()->get();
+        
         return view($this->theme . 'blog', $data);
-    }
-
-    public function blog_details(){
-        return view($this->theme . 'blogDetails');
     }
 
     public function blogDetails($slug = null, $id)
     {
-        $getData = Content::findOrFail($id);
 
-        $contentSection = [$getData->name];
-        $contentDetail = ContentDetails::select('id', 'content_id', 'description', 'created_at')
-            ->where('content_id', $getData->id)
-            ->whereHas('content', function ($query) use ($contentSection) {
-                return $query->whereIn('name', $contentSection);
-            })
-            ->with(['content:id,name',
-                'content.contentMedia' => function ($q) {
-                    $q->select(['content_id', 'description']);
-                }])
-            ->get()->groupBy('content.name');
+        $data['singleBlog']    = Blog::with('details')->findOrFail($id);
+        $data['blogCategory']  = BlogCategoryDetails::where('blog_category_id', $data['singleBlog']->blog_category_id)->first();
 
-        $singleItem['title'] = @$contentDetail[$getData->name][0]->description->title;
-        $singleItem['description'] = @$contentDetail[$getData->name][0]->description->description;
-        $singleItem['date'] = dateTime(@$contentDetail[$getData->name][0]->created_at, 'd M, Y');
-        $singleItem['image'] = getFile(config('location.content.path') . @$contentDetail[$getData->name][0]->content->contentMedia->description->image);
-
-
-        $contentSectionPopular = ['blog'];
-        $popularContentDetails = ContentDetails::select('id', 'content_id', 'description', 'created_at')
-            ->where('content_id', '!=', $getData->id)
-            ->whereHas('content', function ($query) use ($contentSectionPopular) {
-                return $query->whereIn('name', $contentSectionPopular);
-            })
-            ->with(['content:id,name',
-                'content.contentMedia' => function ($q) {
-                    $q->select(['content_id', 'description']);
-                }])
-            ->get()->groupBy('content.name');
-
-        return view($this->theme . 'blogDetails', compact('singleItem', 'popularContentDetails'));
+        return view($this->theme . 'blogDetails', $data);
     }
 
 
     public function faq()
     {
 
-        $templateSection = ['faq'];
-        $data['templates'] = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
+        $templateSection          = ['faq'];
+        $data['templates']        = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
 
-        $contentSection = ['faq'];
-        $data['contentDetails'] = ContentDetails::select('id', 'content_id', 'description', 'created_at')
+        $contentSection           = ['faq'];
+        $data['contentDetails']   = ContentDetails::select('id', 'content_id', 'description', 'created_at')
+
             ->whereHas('content', function ($query) use ($contentSection) {
                 return $query->whereIn('name', $contentSection);
             })
@@ -159,10 +121,10 @@ class FrontendController extends Controller
 
     public function contact()
     {
-        $templateSection = ['contact-us'];
-        $templates = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
-        $title = 'Contact Us';
-        $contact = @$templates['contact-us'][0]->description;
+        $templateSection    = ['contact-us'];
+        $templates          = Template::templateMedia()->whereIn('section_name', $templateSection)->get()->groupBy('section_name');
+        $title              = 'Contact Us';
+        $contact            = @$templates['contact-us'][0]->description;
 
         return view($this->theme . 'contact', compact('title', 'contact'));
     }
@@ -170,28 +132,29 @@ class FrontendController extends Controller
     public function contactSend(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:50',
-            'email' => 'required|email|max:91',
-            'subject' => 'required|max:100',
-            'message' => 'required|max:1000',
+            'name'     => 'required|max:50',
+            'email'    => 'required|email|max:91',
+            'subject'  => 'required|max:100',
+            'message'  => 'required|max:1000',
         ]);
+
         $requestData = Purify::clean($request->except('_token', '_method'));
 
-        $basic = (object)config('basic');
-        $basicEmail = $basic->sender_email;
+        $basic        = (object)config('basic');
+        $basicEmail   = $basic->sender_email;
 
-        $name = $requestData['name'];
-        $email_from = $requestData['email'];
-        $subject = $requestData['subject'];
-        $message = $requestData['message']."<br>Regards<br>".$name;
-        $from = $email_from;
+        $name         = $requestData['name'];
+        $email_from   = $requestData['email'];
+        $subject      = $requestData['subject'];
+        $message      = $requestData['message']."<br>Regards<br>".$name;
+        $from         = $email_from;
 
-        $headers = "From: <$from> \r\n";
-        $headers .= "Reply-To: <$from> \r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+        $headers      = "From: <$from> \r\n";
+        $headers     .= "Reply-To: <$from> \r\n";
+        $headers     .= "MIME-Version: 1.0\r\n";
+        $headers     .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-        $to = $basicEmail;
+        $to           = $basicEmail;
 
         if (@mail($to, $subject, $message, $headers)) {
             // echo 'Your message has been sent.';
@@ -204,10 +167,10 @@ class FrontendController extends Controller
 
     public function getLink($getLink = null, $id)
     {
-        $getData = Content::findOrFail($id);
+        $getData         = Content::findOrFail($id);
+        $contentSection  = [$getData->name];
+        $contentDetail   = ContentDetails::select('id', 'content_id', 'description', 'created_at')
 
-        $contentSection = [$getData->name];
-        $contentDetail = ContentDetails::select('id', 'content_id', 'description', 'created_at')
             ->where('content_id', $getData->id)
             ->whereHas('content', function ($query) use ($contentSection) {
                 return $query->whereIn('name', $contentSection);
@@ -218,8 +181,9 @@ class FrontendController extends Controller
                 }])
             ->get()->groupBy('content.name');
 
-        $title = @$contentDetail[$getData->name][0]->description->title;
+        $title       = @$contentDetail[$getData->name][0]->description->title;
         $description = @$contentDetail[$getData->name][0]->description->description;
+
         return view($this->theme . 'getLink', compact('contentDetail', 'title', 'description'));
     }
 
@@ -232,8 +196,9 @@ class FrontendController extends Controller
         if ($validator->fails()) {
             return redirect(url()->previous() . '#subscribe')->withErrors($validator);
         }
-        $data = new Subscriber();
-        $data->email = $request->email;
+
+        $data         = new Subscriber();
+        $data->email  = $request->email;
         $data->save();
         return redirect(url()->previous() . '#subscribe')->with('success', 'Subscribed Successfully');
     }
@@ -241,14 +206,12 @@ class FrontendController extends Controller
     public function language($code)
     {
         $language = Language::where('short_name', $code)->first();
+
         if (!$language) $code = 'US';
         session()->put('trans', $code);
         session()->put('rtl', $language ? $language->rtl : 0);
+        
         return redirect()->back();
     }
-
-
-
-
 
 }
