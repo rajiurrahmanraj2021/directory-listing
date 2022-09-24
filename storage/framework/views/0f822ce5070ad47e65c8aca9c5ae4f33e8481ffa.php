@@ -24,14 +24,12 @@
                         <th scope="col"><?php echo app('translator')->get('Category'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Author'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Title'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Details'); ?></th>
                         
                         <th scope="col"><?php echo app('translator')->get('Action'); ?></th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php $__empty_1 = true; $__currentLoopData = $blogs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $blog): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-
                         <tr>
                             <td data-label="<?php echo app('translator')->get('SL No.'); ?>"><?php echo e($loop->index+1); ?></td>
                             <td data-label="<?php echo app('translator')->get('Category'); ?>">
@@ -46,19 +44,17 @@
                                 <?php echo app('translator')->get(@$blog->details->title); ?>
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Category'); ?>">
-                                <?php echo app('translator')->get(@$blog->details->details); ?>
-                            </td>
+                            
 
                             <td data-label="<?php echo app('translator')->get('Action'); ?>">
                                 <button class="btn btn-sm btn-primary edit-button" type="button">
-                                    <a href="#" class="text-white">
+                                    <a href="<?php echo e(route('admin.blogEdit',$blog->id)); ?>" class="text-white">
                                         <i class="fa fa-edit" aria-hidden="true"></i> <?php echo app('translator')->get('Edit'); ?>
                                     </a>
                                 </button>
 
                                 <a href="javascript:void(0)"
-                                    data-route="#"
+                                    data-route="<?php echo e(route('admin.blogDelete',$blog->id)); ?>"
                                     data-toggle="modal"
                                     data-target="#delete-modal"
                                     class="btn btn-danger btn-sm notiflix-confirm"><i class="fas fa-trash"></i> <?php echo app('translator')->get('Delete'); ?>

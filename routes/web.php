@@ -291,6 +291,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::put('blog-update/{id}/{language?}', 'Admin\ContentController@blogUpdate')->name('blogUpdate');
         Route::delete('blog-delete/{id}', 'Admin\ContentController@blogDelete')->name('blogDelete');
 
+        
+
 
 
         Route::get('admin/blog/create', 'Admin\ContentController@blog_list')->name('blog.create');
@@ -322,6 +324,9 @@ Route::get('/listing', 'FrontendController@listing')->name('listing');
 Route::get('/listing-details', 'FrontendController@listing_details')->name('listing-details');
 Route::get('/blog', 'FrontendController@blog')->name('blog');
 Route::get('/blog-details/{slug}/{id}', 'FrontendController@blogDetails')->name('blogDetails');
+Route::get('category-wise-blog/{slug}/{id}', 'FrontendController@CategoryWiseBlog')->name('CategoryWiseBlog');
+
+Route::get('blog-search', 'FrontendController@blogSearch')->name('blogSearch');
 
 
 

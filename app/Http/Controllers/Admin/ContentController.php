@@ -296,21 +296,20 @@ class ContentController extends Controller
     }
 
     public function blogCreate(){
+
         $languages              = Language::all();
         $data['blogCategory']   = BlogCategory::with('details')->get();
         return view('admin.blog.blogCreate',$data, compact('languages'));
     }
 
+
     public function blogStore(Request $request, $language=null){
        
-
         $purifiedData = Purify::clean($request->except('image', '_token', '_method'));
-
 
         if ($request->has('image')) {
             $purifiedData['image'] = $request->image;
         }
-
 
         $rules = [
             'blog_category_id' => 'required',
@@ -363,6 +362,7 @@ class ContentController extends Controller
         return redirect()->route('admin.blogList')->with('success', 'Blog Successfully Saved');
     }
 
+
     public function blogEdit($id)
     {
         $languages    = Language::all();
@@ -372,6 +372,7 @@ class ContentController extends Controller
         return view('admin.blog.blogEdit', compact('languages', 'blogDetails', 'blogCategory', 'id'));
     }
 
+    
     public function blogUpdate(Request $request, $id, $language_id)
     {
         $purifiedData = Purify::clean($request->except('image', '_token', '_method'));
@@ -381,11 +382,11 @@ class ContentController extends Controller
         }
 
         $rules = [
-            'blog_category_id'   => 'required',
+            'blog_category_id'   => 'sometimes|required',
             'author.*'           => 'required|max:50',
             'title.*'            => 'required|max:191',
             'details.*'          => 'required',
-            'image'              => 'required|mimes:jpg,jpeg,png'
+            'image'              => 'sometimes|required|mimes:jpg,jpeg,png'
         ];
         $message = [
             'blog_category_id.required'  => 'Please select blog category',
@@ -403,7 +404,11 @@ class ContentController extends Controller
         }
 
         $blog = Blog::findOrFail($id);
-        $blog->blog_category_id = $request->blog_category_id;
+
+        if($request->has('blog_category_id')){
+            $blog->blog_category_id = $request->blog_category_id;
+        }
+        
 
         if ($request->hasFile('image')) {
             try {
@@ -424,9 +429,11 @@ class ContentController extends Controller
                 'details'   => $purifiedData["details"][$language_id],
             ]
         );
+
         return redirect()->route('admin.blogList')->with('success', 'Blog Successfully Updated');
 
     }
+
 
     public function blogDelete($id)
     {

@@ -151,6 +151,7 @@ function slug($title)
 {
     return \Illuminate\Support\Str::slug($title);
 }
+
 function title2snake($string)
 {
     return Str::title(str_replace(' ', '_', $string));

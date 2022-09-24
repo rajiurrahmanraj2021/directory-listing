@@ -31,10 +31,8 @@
                     <div class="tab-pane fade <?php echo e($loop->first ? 'show active' : ''); ?>" id="lang-tab-<?php echo e($key); ?>" role="tabpanel">
                         <form method="post" action="<?php echo e(route('admin.blogStore', $language->id)); ?>"  class="mt-4" enctype="multipart/form-data">
                             <?php echo csrf_field(); ?>
-                           
-                         
 
-                            <?php if($loop->index == 0): ?>
+                           <?php if($loop->index == 0): ?>
                                 <div class="row mb-3">
                                     <div class="col-sm-12 col-md-12 mb-3">
                                         <label for="blog_category_id"> <?php echo app('translator')->get('Select Category'); ?> </label>  

@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]>
-<html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]>
-<html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]>
-<html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
 <html class="no-js" lang="en" <?php if(session()->get('rtl') == 1): ?> dir="rtl" <?php endif; ?> >
     <head>
         <meta charset="utf-8"/>
@@ -28,13 +21,14 @@
         <link rel="stylesheet" href="<?php echo e(asset('assets/themes/deepblue/assets/plugins/rangeslider/range-slider.css')); ?>" />
         <!-- font awesome 5 -->
         <script src="<?php echo e(asset('assets/themes/deepblue/assets/fontawesome/fontawesomepro.js')); ?>"></script>
+        <!---- Here is your Css Library----->
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap.min.scss')); ?>"/>
         <!-- custom css -->
         <link rel="stylesheet" href="<?php echo e(asset('assets/themes/deepblue/css/style.css')); ?>" />
 
         <!----  How to load Css Library, Here is an example ----->
         
         <?php echo $__env->yieldPushContent('css-lib'); ?>
-        <!---- Here is your Css Library----->
 
         <!----  Push your custom css  ----->
         <?php echo $__env->yieldPushContent('style'); ?>
@@ -66,10 +60,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo e(route('blog')); ?>">Blogs</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo e(route('faq')); ?>">FAQ</a>
                         </li>
                         
                         <li class="nav-item">

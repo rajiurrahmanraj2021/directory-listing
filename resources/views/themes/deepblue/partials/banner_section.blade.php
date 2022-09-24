@@ -1,3 +1,9 @@
+<style>
+    .banner-section {
+       background-image: url({{getFile(config('location.logo.path').'banner.jpg')}});
+   }
+</style>
+
 @if (!request()->routeIs('home'))
     <section class="banner-section">
         <div class="overlay">
@@ -13,3 +19,5 @@
         </div>
     </section>
 @endif
+
+

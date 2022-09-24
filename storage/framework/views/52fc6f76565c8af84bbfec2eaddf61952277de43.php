@@ -2,11 +2,10 @@
 <?php $__env->startSection('title',trans('Listing')); ?>
 
 <?php $__env->startSection('banner_heading'); ?>
-   Best Listings
+   <?php echo app('translator')->get('Best Listings'); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-
      <section class="listing-section">
         <div class="container-fluid">
            <div class="row">
@@ -368,6 +367,5 @@
            </div>
         </div>
      </section>
-
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make($theme.'layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\server\htdocs\project\resources\views/themes/deepblue/listing.blade.php ENDPATH**/ ?>

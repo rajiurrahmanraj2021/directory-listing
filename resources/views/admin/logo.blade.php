@@ -5,7 +5,13 @@
 @endsection
 @section('content')
     <div class="container-fluid">
-
+        <div class="alert alert-warning d-flex align-items-center p-0" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              <p class="text-dark text-left mt-3"><span class="text-danger">@lang('NB'):</span> @lang('After changing Banner, clear your browser cache to see changes')</p>
+            </div>
+          </div>
+          
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary shadow">
@@ -194,9 +200,6 @@
 
                                 </form>
                             </div>
-
-
-                            <p class="text-dark text-left mt-4"><span class="text-danger">@lang('NB'):</span> @lang('After changing Logo/SEO, clear your browser cache to see changes')</p>
 
                         </div>
                     </div>

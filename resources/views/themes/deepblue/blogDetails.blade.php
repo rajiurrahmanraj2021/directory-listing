@@ -1,5 +1,9 @@
 @extends($theme.'layouts.app')
-@section('title',trans('Blog Details'))
+@section('title',trans($title))
+
+@section('banner_heading')
+   @lang('Blog Details')
+@endsection
 
 @section('content')
      <!-- blog section -->
@@ -38,61 +42,33 @@
                      </div>
                   </div>
                </div>
-               <div class="col-lg-4">
-                  <div class="right-bar">
-                     <div class="side-box">
-                        <h4>Related Posts</h4>
-                        <div class="blog-box">
-                           <div class="img-box">
-                              <img
-                                 class="img-fluid"
-                                 src="{{ asset('assets/themes/deepblue/img/blog/blog-3.jpg') }}"
-                                 alt=""
-                              />
-                              <span class="category">Drink &amp; Food</span>
-                           </div>
-                           <div class="text-box">
-                              <a href="blog-details.html" class="title"
-                                 >Best Luxury Switzerland Tours &amp; Travel
-                                 Packages
-                              </a>
-                           </div>
-                        </div>
-                        <div class="blog-box">
-                           <div class="img-box">
-                              <img
-                                 class="img-fluid"
-                                 src="{{ asset('assets/themes/deepblue/img/blog/blog-2.jpg') }}"
-                                 alt=""
-                              />
-                              <span class="category">Drink &amp; Food</span>
-                           </div>
-                           <div class="text-box">
-                              <a href="blog-details.html" class="title"
-                                 >Best Luxury Switzerland Tours &amp; Travel
-                                 Packages
-                              </a>
-                           </div>
-                        </div>
-                        <div class="blog-box">
-                           <div class="img-box">
-                              <img
-                                 class="img-fluid"
-                                 src="{{ asset('assets/themes/deepblue/img/blog/blog-1.jpg') }}"
-                                 alt=""
-                              />
-                              <span class="category">Drink &amp; Food</span>
-                           </div>
-                           <div class="text-box">
-                              <a href="blog-details.html" class="title"
-                                 >Best Luxury Switzerland Tours &amp; Travel
-                                 Packages
-                              </a>
-                           </div>
+               @if (count($relatedBlogs) > 0)
+                  <div class="col-lg-4">
+                     <div class="right-bar">
+                        <div class="side-box">
+                           <h4>@lang('Related Blogs')</h4>
+                           
+                           @foreach ($relatedBlogs as $blog)
+                              <div class="blog-box">
+                                 <div class="img-box">
+                                    <img
+                                    class="img-fluid"
+                                    src="{{ getFile(config('location.blog.path'). @$blog->image) }}"
+                                    alt=""
+                                    />
+                                    <span class="category">@lang(optional($blog->blogCategory->details)->name)</span>
+                                 </div>
+                                 <div class="text-box">
+                                    <a href="{{route('blogDetails',[slug(@$blog->details->title), $blog->id])}}" class="title"
+                                    >{{ \Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100) }}
+                                       </a>
+                                 </div>
+                              </div>
+                           @endforeach
                         </div>
                      </div>
                   </div>
-               </div>
+               @endif
             </div>
          </div>
       </section>

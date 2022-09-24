@@ -526,7 +526,6 @@ a.btn-custom {
 
 .home-section {
   height: 80vh;
-  background: url(../img/pexels-darya-sannikova-2422386.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2107,7 +2106,7 @@ a.btn-custom {
 }
 
 .banner-section {
-  background-image: url(../img/pexels-pixabay-271624.jpg);
+  /* background-image: url(../img/pexels-pixabay-271624.jpg); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

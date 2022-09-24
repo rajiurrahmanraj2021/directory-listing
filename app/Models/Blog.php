@@ -24,6 +24,10 @@ class Blog extends Model
         return $this->hasOne(BlogCategory::class, 'id', 'blog_category_id');
     }
 
+    public function blogCategory(){
+        return $this->hasOne(BlogCategory::class, 'id', 'blog_category_id');
+    }
+
 
 
 }

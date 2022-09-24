@@ -1,7 +1,11 @@
+
 <?php $__env->startSection('title', trans('FAQ')); ?>
 
-<?php $__env->startSection('content'); ?>
+<?php $__env->startSection('banner_heading'); ?>
+   <?php echo app('translator')->get('Faq'); ?>
+<?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('content'); ?>
     <!-- faq section -->
     <section class="faq-section faq-page">
         <div class="container">
@@ -73,9 +77,6 @@
            <?php endif; ?>
         </div>
      </section>
-
 <?php $__env->stopSection(); ?>
-
-
 
 <?php echo $__env->make($theme.'layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\server\htdocs\project\resources\views/themes/deepblue/faq.blade.php ENDPATH**/ ?>

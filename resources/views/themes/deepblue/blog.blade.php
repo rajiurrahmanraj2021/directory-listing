@@ -12,7 +12,8 @@
             <div class="container">
                <div class="row g-lg-5">
                   <div class="col-lg-8">
-                     @foreach ($allBlogs as $blog)
+                     @forelse ($allBlogs as $blog)
+      
                         <div class="blog-box">
                            <div class="img-box">
                               <img
@@ -20,12 +21,12 @@
                                  src="{{ getFile(config('location.blog.path'). @$blog->image) }}"
                                  alt=""
                               />
-                              <span class="category"></span>
+                              <span class="category"> @lang(optional($blog->blogCategory->details)->name)</span>
                            </div>
                            <div class="text-box">
                               <div class="date-author mb-3">
                                  <span class="author">
-                                    <i class="fad fa-pencil"></i>@lang(@$blog->details->author)
+                                    <i class="fad fa-pencil"></i>@lang(optional(@$blog->details)->author)
                                  </span>
                                  <span class="float-end">
                                     <i
@@ -36,24 +37,25 @@
                                  </span>
                               </div>
                               <a href="blog-details.html" class="title"
-                                 >{{ \Illuminate\Support\Str::limit(@$blog->details->title, 100) }}
+                                 >{{ \Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100) }}
                                  
 
                                  
                               </a>
                               <p>
-                                 {{Illuminate\Support\Str::limit(strip_tags(@$blog->details->details),500)}}
+                                 {{Illuminate\Support\Str::limit(strip_tags(optional(@$blog->details)->details),500)}}
                               </p>
                               <a href="{{route('blogDetails',[slug(@$blog->details->title), $blog->id])}}" class="btn-custom"
                                  >@lang('Read more')</a
                               >
                            </div>
                         </div>
-                     @endforeach
-                     
+                     @empty
+
+                     @endforelse
 
                      <nav aria-label="Page navigation example mt-5">
-                        <ul class="pagination justify-content-center mt-5">
+                        {{-- <ul class="pagination justify-content-center mt-5">
                            <li class="page-item disabled">
                               <a class="page-link">Previous</a>
                            </li>
@@ -69,86 +71,56 @@
                            <li class="page-item">
                               <a class="page-link" href="#">Next</a>
                            </li>
-                        </ul>
+                        </ul> --}}
+                        {{ $allBlogs->links() }}
                      </nav>
                   </div>
                   
                   <div class="col-lg-4">
                      <div class="right-bar">
                         <div class="side-box">
-                           <form action="">
-                              <h4>Search</h4>
+                           <form action="{{ route('blogSearch') }}" method="get">
+                              <h4>@lang('Search')</h4>
                               <div class="input-group">
-                                 <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="search"
+                                 <input type="text" class="form-control" name="search" id="search" placeholder="@lang('search')"
                                  />
-                                 <button><i class="fal fa-search"></i></button>
+                                 <button type="submit"><i class="fal fa-search"></i></button>
                               </div>
                            </form>
                         </div>
 
                         <div class="side-box">
-                           <h4>categories</h4>
+                           <h4>@lang('Categories')</h4>
                            <ul class="links">
-                              <li><a href="">Albums</a></li>
-                              <li><a href="">Dress</a></li>
-                              <li><a href="">Events</a></li>
-                              <li><a href="">Festivals</a></li>
+                              @foreach ($blogCategory as $category)
+                                 <a href="{{ route('CategoryWiseBlog', [slug(@$category->details->name), $category->id]) }}" > 
+                                    <li>
+                                       @lang(optional(@$category->details)->name)
+                                    </li>  
+                                 </a> 
+                              @endforeach
                            </ul>
                         </div>
 
                         <div class="side-box">
-                           <h4>Related Posts</h4>
-                           <div class="blog-box">
-                              <div class="img-box">
-                                 <img
-                                    class="img-fluid"
-                                    src="{{ asset('assets/themes/deepblue/img/blog/blog-3.jpg') }}"
-                                    alt=""
-                                 />
-                                 <span class="category">Drink &amp; Food</span>
+                           <h4>@lang('Recent Blogs')</h4>
+                           @foreach ($allBlogs as $blog)
+                              <div class="blog-box">
+                                 <div class="img-box">
+                                    <img
+                                       class="img-fluid"
+                                       src="{{ getFile(config('location.blog.path'). @$blog->image) }}"
+                                       alt=""
+                                    />
+                                    <span class="category">@lang(optional($blog->blogCategory->details)->name)</span>
+                                 </div>
+                                 <div class="text-box">
+                                    <a href="{{route('blogDetails',[slug(@$blog->details->title), $blog->id])}}" class="title"
+                                       >{{ \Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100) }}
+                                    </a>
+                                 </div>
                               </div>
-                              <div class="text-box">
-                                 <a href="blog-details.html" class="title"
-                                    >Best Luxury Switzerland Tours &amp; Travel
-                                    Packages
-                                 </a>
-                              </div>
-                           </div>
-                           <div class="blog-box">
-                              <div class="img-box">
-                                 <img
-                                    class="img-fluid"
-                                    src="{{ asset('assets/themes/deepblue/img/blog/blog-2.jpg') }}"
-                                    alt=""
-                                 />
-                                 <span class="category">Drink &amp; Food</span>
-                              </div>
-                              <div class="text-box">
-                                 <a href="blog-details.html" class="title"
-                                    >Best Luxury Switzerland Tours &amp; Travel
-                                    Packages
-                                 </a>
-                              </div>
-                           </div>
-                           <div class="blog-box">
-                              <div class="img-box">
-                                 <img
-                                    class="img-fluid"
-                                    src="{{ asset('assets/themes/deepblue/img/blog/blog-1.jpg') }}"
-                                    alt=""
-                                 />
-                                 <span class="category">Drink &amp; Food</span>
-                              </div>
-                              <div class="text-box">
-                                 <a href="blog-details.html" class="title"
-                                    >Best Luxury Switzerland Tours &amp; Travel
-                                    Packages
-                                 </a>
-                              </div>
-                           </div>
+                           @endforeach
                         </div>
 
                      </div>
@@ -157,7 +129,10 @@
             </div>
          </section>
       @else
-         <h3 class="text-center mt-5 mb-5">@lang('No Blogs Available Here')</h3>
+         <div class="justify-content-center d-flex flex-column">
+            <h3 class="text-center mt-5 mb-5">@lang('No Blogs Available Here')</h3>
+            <a class="btn btn-primary text-center mt-2 mb-4" href="{{ route('blog') }}">@lang('Back')</a>
+         </div>
      @endif  
     <!-- /BLOG -->
 @endsection

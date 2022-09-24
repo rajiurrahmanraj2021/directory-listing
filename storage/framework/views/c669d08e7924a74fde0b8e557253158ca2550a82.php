@@ -1,3 +1,9 @@
+<style>
+    .banner-section {
+       background-image: url(<?php echo e(getFile(config('location.logo.path').'banner.jpg')); ?>);
+   }
+</style>
+
 <?php if(!request()->routeIs('home')): ?>
     <section class="banner-section">
         <div class="overlay">
@@ -13,4 +19,6 @@
         </div>
     </section>
 <?php endif; ?>
+
+
 <?php /**PATH D:\server\htdocs\project\resources\views/themes/deepblue/partials/banner_section.blade.php ENDPATH**/ ?>

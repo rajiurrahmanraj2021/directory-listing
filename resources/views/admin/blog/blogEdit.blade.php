@@ -25,7 +25,6 @@
 
             <div class="tab-content mt-2" id="myTabContent">
                 @foreach($languages as $key => $language)
-
                     <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="lang-tab-{{ $key }}" role="tabpanel">
                         <form method="post" action="{{ route('admin.blogUpdate',[$id, $language->id]) }}" class="mt-4" enctype="multipart/form-data">
                             @csrf

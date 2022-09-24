@@ -31,10 +31,8 @@
                     <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="lang-tab-{{ $key }}" role="tabpanel">
                         <form method="post" action="{{ route('admin.blogStore', $language->id) }}"  class="mt-4" enctype="multipart/form-data">
                             @csrf
-                           
-                         
 
-                            @if ($loop->index == 0)
+                           @if ($loop->index == 0)
                                 <div class="row mb-3">
                                     <div class="col-sm-12 col-md-12 mb-3">
                                         <label for="blog_category_id"> @lang('Select Category') </label>  

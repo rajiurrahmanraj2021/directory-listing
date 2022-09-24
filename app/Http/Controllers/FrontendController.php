@@ -10,6 +10,7 @@ use App\Http\Traits\Notify;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogCategoryDetails;
+use App\Models\BlogDetails;
 use Illuminate\Http\Request;
 use App\Models\ContentDetails;
 use Stevebauman\Purify\Facades\Purify;
@@ -81,20 +82,54 @@ class FrontendController extends Controller
 
     public function blog()
     {
-        $data['allBlogs']     = Blog::with('details')->latest()->get();
+        $data['title'] = "Blog";
+        $data['allBlogs']     = Blog::with(['details','blogCategory.details'])->latest()->paginate(3);
         $data['blogCategory'] = BlogCategory::with('details')->latest()->get();
-        
         return view($this->theme . 'blog', $data);
     }
 
+    public function blogSearch(Request $request){
+        
+        $data['title'] = "Blog";
+        $search = $request->search;
+
+        $data['blogCategory'] = BlogCategory::with('details')->latest()->get();
+
+        $data['allBlogs'] = Blog::with('details','blogCategory.details')
+        ->whereHas('blogCategory.details', function ($qq) use ($search){
+            $qq->where('name','Like', '%'.$search.'%');
+        })
+        ->orWhereHas('details', function ($qq2) use ($search){
+            $qq2->where('title','Like', '%'.$search.'%');
+            $qq2->orWhere('author','Like', '%'.$search.'%');
+            $qq2->orWhere('details','Like', '%'.$search.'%');
+        })
+        ->latest()->paginate(3);
+
+        return view($this->theme . 'blog', $data);
+
+    }
+
+
     public function blogDetails($slug = null, $id)
     {
-
+        $data['title'] = "Blog Details";
         $data['singleBlog']    = Blog::with('details')->findOrFail($id);
         $data['blogCategory']  = BlogCategoryDetails::where('blog_category_id', $data['singleBlog']->blog_category_id)->first();
-
+        $data['relatedBlogs']  = Blog::with(['details', 'blogCategory.details'])->where('id','!=',$id)->where('blog_category_id', $data['singleBlog']->blog_category_id)->latest()->paginate(3);
         return view($this->theme . 'blogDetails', $data);
     }
+
+    public function CategoryWiseBlog($slug = null, $id){
+
+        $data['title'] = "Blog";
+
+        $data['allBlogs'] = Blog::with(['details', 'blogCategory.details'])->where('blog_category_id', $id)->latest()->paginate(3);
+        $data['blogCategory'] = BlogCategory::with('details')->latest()->get();
+
+        return view($this->theme . 'blog', $data);
+    }
+
 
 
     public function faq()

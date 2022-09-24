@@ -21,13 +21,14 @@
         <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/assets/plugins/rangeslider/range-slider.css') }}" />
         <!-- font awesome 5 -->
         <script src="{{ asset('assets/themes/deepblue/assets/fontawesome/fontawesomepro.js') }}"></script>
+        <!---- Here is your Css Library----->
+        <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.scss')}}"/>
         <!-- custom css -->
         <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/css/style.css') }}" />
 
         <!----  How to load Css Library, Here is an example ----->
         {{--    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}"/>--}}
         @stack('css-lib')
-        <!---- Here is your Css Library----->
 
         <!----  Push your custom css  ----->
         @stack('style')
@@ -59,10 +60,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('blog') }}">Blogs</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('faq') }}">FAQ</a>
                         </li>
                         
                         <li class="nav-item">

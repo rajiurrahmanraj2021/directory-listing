@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title',trans('About Us')); ?>
 
 <?php $__env->startSection('banner_heading'); ?>
@@ -28,7 +29,6 @@
                            <h3><?php echo app('translator')->get(@$about_us->description->sub_title); ?></h3>
                         </div>
                         <div>
-                           
                            <?php echo $about_us->description->description; ?>
 
                         </div>

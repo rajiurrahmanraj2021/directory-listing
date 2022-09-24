@@ -1,6 +1,10 @@
 @extends($theme.'layouts.app')
 @section('title', trans('FAQ'))
 
+@section('banner_heading')
+   @lang('Faq')
+@endsection
+
 @section('content')
     <!-- faq section -->
     <section class="faq-section faq-page">
