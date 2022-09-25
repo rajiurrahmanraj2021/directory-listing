@@ -321,6 +321,7 @@ Route::get('/', 'FrontendController@index')->name('home');
 Route::get('/about', 'FrontendController@about')->name('about');
 Route::get('/pricing', 'FrontendController@pricing')->name('pricing');
 Route::get('/listing', 'FrontendController@listing')->name('listing');
+Route::get('/category', 'FrontendController@category')->name('category');
 Route::get('/listing-details', 'FrontendController@listing_details')->name('listing-details');
 Route::get('/blog', 'FrontendController@blog')->name('blog');
 Route::get('/blog-details/{slug}/{id}', 'FrontendController@blogDetails')->name('blogDetails');

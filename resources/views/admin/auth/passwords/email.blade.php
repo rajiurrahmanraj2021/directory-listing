@@ -14,7 +14,7 @@
 
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label class="text-dark" for="pwd">@lang('Enter Email Address')</label>
+                        <label class="text-dark" for="pwd">@lang('Enter Email Addressaaa')</label>
                         <input  type="email" class="form-control" name="email" value="{{old('email')}}" required autocomplete="off">
                         @error('email')
                         <p class="text-danger" >{{ $message }}</p>

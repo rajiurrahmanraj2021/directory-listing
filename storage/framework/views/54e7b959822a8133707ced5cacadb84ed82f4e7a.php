@@ -5,7 +5,10 @@
        <div class="row">
           <div class="col-md-6 col-lg-3">
              <div class="footer-box">
-                <a class="navbar-brand" href="#"> <?php echo app('translator')->get(config('basic.site_title')); ?> </a>
+                <a class="navbar-brand" href="#"> 
+                  <img src="<?php echo e(getFile(config('location.logoIcon.path').'logo.png')); ?>"
+                         alt="<?php echo e(config('basic.site_title')); ?>">
+                </a>
                   <?php if(isset($contactUs['contact-us'][0]) && $contact = $contactUs['contact-us'][0]): ?>
                      <p>
                         <?php echo app('translator')->get(strip_tags(@$contact->description->footer_short_details)); ?>

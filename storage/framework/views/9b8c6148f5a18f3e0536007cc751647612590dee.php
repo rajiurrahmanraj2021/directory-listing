@@ -1,54 +1,56 @@
 <?php $__env->startSection('title','Reset Password'); ?>
 
+<?php $__env->startSection('banner_heading'); ?>
+   <?php echo app('translator')->get('Recover Password'); ?>
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <section style="padding: 120px 0"id="about-us" class="about-page secbg-3">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <div class="form-block py-5">
-                        <?php if(session('status')): ?>
-                            <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
-                                <?php echo e(trans(session('status'))); ?>
+    <section class="login-section">
+        <div class="overlay h-100">
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col-lg-6 col-md-6 offset-3 col-12">
+                    <?php if(session('status')): ?>
+                        <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+                            <?php echo e(trans(session('status'))); ?>
 
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif; ?>
+                    <div class="form-wrapper d-flex align-items-center h-100">
+                    
+                    <form action="<?php echo e(route('password.email')); ?>" method="post">
+                        <?php echo csrf_field(); ?>
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h4><?php echo app('translator')->get('Recover password'); ?></h4>
                             </div>
-                        <?php endif; ?>
-
-                        <form class="login-form" action="<?php echo e(route('password.email')); ?>"  method="post">
-                            <?php echo csrf_field(); ?>
-                            <div class="signin">
-                                <h3 class="title mb-30"><?php echo app('translator')->get('Reset Password'); ?></h3>
-
-                                <div class="form-group mb-30">
-                                    <input class="form-control" type="email" name="email" value="<?php echo e(old('email')); ?>"
-                                           placeholder="<?php echo app('translator')->get('Enter your Email Address'); ?>">
-
-                                    <?php $__errorArgs = ['email'];
+                            <div class="input-box col-12">
+                                <input
+                                type="email"
+                                autocomplete="off"
+                                name="email"
+                                class="form-control"
+                                value="<?php echo e(old('email')); ?>"
+                                placeholder="<?php echo app('translator')->get('Enter Your Email address'); ?>"
+                                />
+                            </div>
+                            <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?><span class="text-danger  mt-1"><?php echo e(trans($message)); ?></span><?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?><span class="text-danger mt-1"><?php echo e(trans($message)); ?></span><?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                                </div>
+                        </div>
 
-
-                                <div class="btn-area">
-                                    <button class="btn btn-primary" type="submit"><span><?php echo app('translator')->get('Send Password Reset Link'); ?></span></button>
-                                </div>
-
-                                <div class="login-query mt-30 text-center">
-                                    <a href="<?php echo e(route('register')); ?>"><?php echo app('translator')->get("Don't have any account? Sign Up"); ?></a>
-                                </div>
-                            </div>
-                        </form>
+                        <button class="btn-custom w-100 mt-4"><?php echo app('translator')->get('submit'); ?></button>
+                    </form>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 <?php $__env->stopSection(); ?>

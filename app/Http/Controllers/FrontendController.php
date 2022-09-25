@@ -42,6 +42,7 @@ class FrontendController extends Controller
                 }])
             ->get()->groupBy('content.name');
 
+        $data['popularBlogs']  = Blog::with(['details','blogCategory.details'])->take(3)->latest()->get();
         return view($this->theme . 'home', $data);
     }
 
@@ -73,6 +74,10 @@ class FrontendController extends Controller
 
     public function listing(){
         return view($this->theme . 'listing');
+    }
+
+    public function category(){
+        return view($this->theme . 'category');
     }
 
     public function listing_details(){
@@ -116,6 +121,7 @@ class FrontendController extends Controller
         $data['title'] = "Blog Details";
         $data['singleBlog']    = Blog::with('details')->findOrFail($id);
         $data['blogCategory']  = BlogCategoryDetails::where('blog_category_id', $data['singleBlog']->blog_category_id)->first();
+        $data['allBlogCategory'] = BlogCategory::with('details')->latest()->get();
         $data['relatedBlogs']  = Blog::with(['details', 'blogCategory.details'])->where('id','!=',$id)->where('blog_category_id', $data['singleBlog']->blog_category_id)->latest()->paginate(3);
         return view($this->theme . 'blogDetails', $data);
     }
@@ -227,10 +233,12 @@ class FrontendController extends Controller
         $rules = [
             'email' => 'required|email|max:255|unique:subscribers'
         ];
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return redirect(url()->previous() . '#subscribe')->withErrors($validator);
         }
+
 
         $data         = new Subscriber();
         $data->email  = $request->email;

@@ -9,37 +9,37 @@
       </style>
    @endpush
     <!-- how it works section -->
-    <section class="how-it-works">
-        <div class="container">
-           <div class="row">
-              <div class="col-12">
-                 <div class="header-text text-center mb-5">
-                    <h5>@lang(@$howItWork->description->sub_title)</h5>
-                    <h3>@lang(@$howItWork->description->title)</h3>
-                 </div>
-              </div>
-           </div>
-           @if(isset($contentDetails['how-it-work']))
-               <div class="row gy-5 gy-lg-0">
-                     @foreach($contentDetails['how-it-work'] as $k =>  $item)
-                        <div class="col-lg-4 col-md-6 mx-auto">
-                           <div class="box">
-                              <div class="icon-box">
-                                 <img src="{{getFile(config('location.content.path').@$item->content->contentMedia->description->image)}}" alt="@lang('not found')" />
-                              </div>
-                              <div>
-                                 <h5>@lang(@$item->description->title)</h5>
-                                 <p>
-                                    @lang(@$item->description->short_description)
-                                 </p>
-                              </div>
+   @if(isset($contentDetails['how-it-work']))
+      <section class="how-it-works">
+         <div class="container">
+            <div class="row">
+               <div class="col-12">
+                  <div class="header-text text-center mb-5">
+                     <h5>@lang(@$howItWork->description->sub_title)</h5>
+                     <h3>@lang(@$howItWork->description->title)</h3>
+                  </div>
+               </div>
+            </div>
+            <div class="row gy-5 gy-lg-0">
+                  @foreach($contentDetails['how-it-work'] as $k =>  $item)
+                     <div class="col-lg-4 col-md-6 mx-auto">
+                        <div class="box">
+                           <div class="icon-box">
+                              <img src="{{getFile(config('location.content.path').@$item->content->contentMedia->description->image)}}" alt="@lang('not found')" />
+                           </div>
+                           <div>
+                              <h5>@lang(@$item->description->title)</h5>
+                              <p>
+                                 @lang(@$item->description->short_description)
+                              </p>
                            </div>
                         </div>
-                     @endforeach
-               </div>
-            @endif
-        </div>
-     </section>
+                     </div>
+                  @endforeach
+            </div>
+         </div>
+      </section>
+   @endif
 @endif
 
 @push('extra-content')

@@ -1,47 +1,49 @@
 @extends($theme.'layouts.app')
 @section('title','Reset Password')
 
+@section('banner_heading')
+   @lang('Recover Password')
+@endsection
 
 @section('content')
-    <section style="padding: 120px 0"id="about-us" class="about-page secbg-3">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <div class="form-block py-5">
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
-                                {{ trans(session('status')) }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+    <section class="login-section">
+        <div class="overlay h-100">
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col-lg-6 col-md-6 offset-3 col-12">
+                    @if (session('status'))
+                        <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+                            {{ trans(session('status')) }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <div class="form-wrapper d-flex align-items-center h-100">
+                    
+                    <form action="{{ route('password.email') }}" method="post">
+                        @csrf
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h4>@lang('Recover password')</h4>
                             </div>
-                        @endif
-
-                        <form class="login-form" action="{{ route('password.email') }}"  method="post">
-                            @csrf
-                            <div class="signin">
-                                <h3 class="title mb-30">@lang('Reset Password')</h3>
-
-                                <div class="form-group mb-30">
-                                    <input class="form-control" type="email" name="email" value="{{old('email')}}"
-                                           placeholder="@lang('Enter your Email Address')">
-
-                                    @error('email')<span class="text-danger  mt-1">{{ trans($message) }}</span>@enderror
-                                </div>
-
-
-                                <div class="btn-area">
-                                    <button class="btn btn-primary" type="submit"><span>@lang('Send Password Reset Link')</span></button>
-                                </div>
-
-                                <div class="login-query mt-30 text-center">
-                                    <a href="{{ route('register') }}">@lang("Don't have any account? Sign Up")</a>
-                                </div>
+                            <div class="input-box col-12">
+                                <input
+                                type="email"
+                                autocomplete="off"
+                                name="email"
+                                class="form-control"
+                                value="{{old('email')}}"
+                                placeholder="@lang('Enter Your Email address')"
+                                />
                             </div>
-                        </form>
+                            @error('email')<span class="text-danger mt-1">{{ trans($message) }}</span>@enderror
+                        </div>
+
+                        <button class="btn-custom w-100 mt-4">@lang('submit')</button>
+                    </form>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 @endsection

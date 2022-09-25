@@ -1,16 +1,22 @@
 <?php $__env->startSection('title','404'); ?>
 
+<?php $__env->startSection('banner_heading'); ?>
+   <?php echo app('translator')->get('404'); ?>
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <section style="padding: 120px 0"id="add-recipient-form" class="wow fadeInUp" data-wow-delay=".2s" data-wow-offset="300">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-lg-12 text-center">
-                    <span class="display-1 d-block"><?php echo e(trans('Opps!')); ?></span>
-                    <div class="mb-4 lead"><?php echo e(trans('The page you are looking for was not found.')); ?></div>
-                    <a class="btn btn-primary " href="<?php echo e(url('/')); ?>" ><?php echo app('translator')->get('Back To Home'); ?></a>
+    <section class="not-found">
+        <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col">
+                <div class="text-box text-center">
+                    <img src="./img/404.svg" alt="" />
+                    <h1>Oops!</h1>
+                    <p>We can't seem to find the page you are looking for</p>
+                    <a href="<?php echo e(route('home')); ?>">back to home</a>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 <?php $__env->stopSection(); ?>

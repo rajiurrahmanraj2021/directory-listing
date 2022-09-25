@@ -5,7 +5,10 @@
        <div class="row">
           <div class="col-md-6 col-lg-3">
              <div class="footer-box">
-                <a class="navbar-brand" href="#"> @lang(config('basic.site_title')) </a>
+                <a class="navbar-brand" href="#"> 
+                  <img src="{{getFile(config('location.logoIcon.path').'logo.png')}}"
+                         alt="{{config('basic.site_title')}}">
+                </a>
                   @if(isset($contactUs['contact-us'][0]) && $contact = $contactUs['contact-us'][0])
                      <p>
                         @lang(strip_tags(@$contact->description->footer_short_details))

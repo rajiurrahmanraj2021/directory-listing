@@ -42,33 +42,58 @@
                      </div>
                   </div>
                </div>
-               @if (count($relatedBlogs) > 0)
+               
                   <div class="col-lg-4">
                      <div class="right-bar">
                         <div class="side-box">
-                           <h4>@lang('Related Blogs')</h4>
-                           
-                           @foreach ($relatedBlogs as $blog)
-                              <div class="blog-box">
-                                 <div class="img-box">
-                                    <img
-                                    class="img-fluid"
-                                    src="{{ getFile(config('location.blog.path'). @$blog->image) }}"
-                                    alt=""
-                                    />
-                                    <span class="category">@lang(optional($blog->blogCategory->details)->name)</span>
-                                 </div>
-                                 <div class="text-box">
-                                    <a href="{{route('blogDetails',[slug(@$blog->details->title), $blog->id])}}" class="title"
-                                    >{{ \Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100) }}
-                                       </a>
-                                 </div>
+                           <form action="{{ route('blogSearch') }}" method="get">
+                              <h4>@lang('Search')</h4>
+                              <div class="input-group">
+                                 <input type="text" class="form-control" name="search" id="search" placeholder="@lang('search')"
+                                 />
+                                 <button type="submit"><i class="fal fa-search"></i></button>
                               </div>
-                           @endforeach
+                           </form>
                         </div>
+
+                        <div class="side-box">
+                           <h4>@lang('Categories')</h4>
+                           <ul class="links">
+                              @foreach ($allBlogCategory as $category)
+                                 <a href="{{ route('CategoryWiseBlog', [slug(@$category->details->name), $category->id]) }}" > 
+                                    <li>
+                                       @lang(optional(@$category->details)->name)
+                                    </li>  
+                                 </a> 
+                              @endforeach
+                           </ul>
+                        </div>
+                        @if (count($relatedBlogs) > 0)
+                           <div class="side-box">
+                              <h4>@lang('Related Blogs')</h4>
+                              
+                              @foreach ($relatedBlogs as $blog)
+                                 <div class="blog-box">
+                                    <div class="img-box">
+                                       <img
+                                       class="img-fluid"
+                                       src="{{ getFile(config('location.blog.path'). @$blog->image) }}"
+                                       alt=""
+                                       />
+                                       <span class="category">@lang(optional($blog->blogCategory->details)->name)</span>
+                                    </div>
+                                    <div class="text-box">
+                                       <a href="{{route('blogDetails',[slug(@$blog->details->title), $blog->id])}}" class="title"
+                                       >{{ \Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100) }}
+                                          </a>
+                                    </div>
+                                 </div>
+                              @endforeach
+                           </div>
+                        @endif
                      </div>
                   </div>
-               @endif
+               
             </div>
          </div>
       </section>

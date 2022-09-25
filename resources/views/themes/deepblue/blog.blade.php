@@ -116,7 +116,7 @@
                                  </div>
                                  <div class="text-box">
                                     <a href="{{route('blogDetails',[slug(@$blog->details->title), $blog->id])}}" class="title"
-                                       >{{ \Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100) }}
+                                       >{{ \Illuminate\Support\Str::limit(optional(@$blog->details)->title, 40) }}
                                     </a>
                                  </div>
                               </div>

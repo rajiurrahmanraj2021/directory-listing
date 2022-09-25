@@ -43,34 +43,59 @@
                      </div>
                   </div>
                </div>
-               <?php if(count($relatedBlogs) > 0): ?>
+               
                   <div class="col-lg-4">
                      <div class="right-bar">
                         <div class="side-box">
-                           <h4><?php echo app('translator')->get('Related Blogs'); ?></h4>
-                           
-                           <?php $__currentLoopData = $relatedBlogs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $blog): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                              <div class="blog-box">
-                                 <div class="img-box">
-                                    <img
-                                    class="img-fluid"
-                                    src="<?php echo e(getFile(config('location.blog.path'). @$blog->image)); ?>"
-                                    alt=""
-                                    />
-                                    <span class="category"><?php echo app('translator')->get(optional($blog->blogCategory->details)->name); ?></span>
-                                 </div>
-                                 <div class="text-box">
-                                    <a href="<?php echo e(route('blogDetails',[slug(@$blog->details->title), $blog->id])); ?>" class="title"
-                                    ><?php echo e(\Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100)); ?>
-
-                                       </a>
-                                 </div>
+                           <form action="<?php echo e(route('blogSearch')); ?>" method="get">
+                              <h4><?php echo app('translator')->get('Search'); ?></h4>
+                              <div class="input-group">
+                                 <input type="text" class="form-control" name="search" id="search" placeholder="<?php echo app('translator')->get('search'); ?>"
+                                 />
+                                 <button type="submit"><i class="fal fa-search"></i></button>
                               </div>
-                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                           </form>
                         </div>
+
+                        <div class="side-box">
+                           <h4><?php echo app('translator')->get('Categories'); ?></h4>
+                           <ul class="links">
+                              <?php $__currentLoopData = $allBlogCategory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                 <a href="<?php echo e(route('CategoryWiseBlog', [slug(@$category->details->name), $category->id])); ?>" > 
+                                    <li>
+                                       <?php echo app('translator')->get(optional(@$category->details)->name); ?>
+                                    </li>  
+                                 </a> 
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                           </ul>
+                        </div>
+                        <?php if(count($relatedBlogs) > 0): ?>
+                           <div class="side-box">
+                              <h4><?php echo app('translator')->get('Related Blogs'); ?></h4>
+                              
+                              <?php $__currentLoopData = $relatedBlogs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $blog): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                 <div class="blog-box">
+                                    <div class="img-box">
+                                       <img
+                                       class="img-fluid"
+                                       src="<?php echo e(getFile(config('location.blog.path'). @$blog->image)); ?>"
+                                       alt=""
+                                       />
+                                       <span class="category"><?php echo app('translator')->get(optional($blog->blogCategory->details)->name); ?></span>
+                                    </div>
+                                    <div class="text-box">
+                                       <a href="<?php echo e(route('blogDetails',[slug(@$blog->details->title), $blog->id])); ?>" class="title"
+                                       ><?php echo e(\Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100)); ?>
+
+                                          </a>
+                                    </div>
+                                 </div>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                           </div>
+                        <?php endif; ?>
                      </div>
                   </div>
-               <?php endif; ?>
+               
             </div>
          </div>
       </section>

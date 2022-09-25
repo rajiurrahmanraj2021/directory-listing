@@ -104,7 +104,7 @@
                                  </div>
                                  <div class="text-box">
                                     <a href="<?php echo e(route('blogDetails',[slug(@$blog->details->title), $blog->id])); ?>" class="title"
-                                       ><?php echo e(\Illuminate\Support\Str::limit(optional(@$blog->details)->title, 100)); ?>
+                                       ><?php echo e(\Illuminate\Support\Str::limit(optional(@$blog->details)->title, 40)); ?>
 
                                     </a>
                                  </div>
