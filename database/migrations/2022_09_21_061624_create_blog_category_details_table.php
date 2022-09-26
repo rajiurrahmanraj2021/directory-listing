@@ -15,7 +15,7 @@ class CreateBlogCategoryDetailsTable extends Migration
     {
         Schema::create('blog_category_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('blog_category_id')->references('id')->on('blog_categories')->onDelete('cascade');;
+            $table->foreignId('blog_category_id')->references('id')->on('blog_categories')->onDelete('cascade');
             $table->integer('language_id');
             $table->string('name');
             $table->timestamps();

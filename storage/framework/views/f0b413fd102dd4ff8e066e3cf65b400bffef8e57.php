@@ -4,11 +4,11 @@
             
             <?php if($paginator->onFirstPage()): ?>
                 <li class="page-item disabled" aria-disabled="true" aria-label="<?php echo app('translator')->get('pagination.previous'); ?>">
-                    <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                    <span class="page-link" aria-hidden="true">&lsaquo; <?php echo app('translator')->get('Previous'); ?></span>
                 </li>
             <?php else: ?>
                 <li class="page-item">
-                    <a class="page-link" href="<?php echo e($paginator->previousPageUrl()); ?>" rel="prev" aria-label="<?php echo app('translator')->get('pagination.previous'); ?>">&lsaquo;</a>
+                    <a class="page-link" href="<?php echo e($paginator->previousPageUrl()); ?>" rel="prev" aria-label="<?php echo app('translator')->get('pagination.previous'); ?>">&lsaquo; <?php echo app('translator')->get('Previous'); ?></a>
                 </li>
             <?php endif; ?>
 
@@ -34,11 +34,11 @@
             
             <?php if($paginator->hasMorePages()): ?>
                 <li class="page-item">
-                    <a class="page-link" href="<?php echo e($paginator->nextPageUrl()); ?>" rel="next" aria-label="<?php echo app('translator')->get('pagination.next'); ?>">&rsaquo;</a>
+                    <a class="page-link" href="<?php echo e($paginator->nextPageUrl()); ?>" rel="next" aria-label="<?php echo app('translator')->get('pagination.next'); ?>"><?php echo app('translator')->get('Next'); ?> &rsaquo;</a>
                 </li>
             <?php else: ?>
                 <li class="page-item disabled" aria-disabled="true" aria-label="<?php echo app('translator')->get('pagination.next'); ?>">
-                    <span class="page-link" aria-hidden="true">&rsaquo;</span>
+                    <span class="page-link" aria-hidden="true"><?php echo app('translator')->get('Next'); ?> &rsaquo;</span>
                 </li>
             <?php endif; ?>
         </ul>

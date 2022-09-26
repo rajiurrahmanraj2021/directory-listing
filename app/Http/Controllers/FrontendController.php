@@ -13,6 +13,8 @@ use App\Models\BlogCategoryDetails;
 use App\Models\BlogDetails;
 use Illuminate\Http\Request;
 use App\Models\ContentDetails;
+use App\Models\ListingCategory;
+use App\Models\ListingCategoryDetails;
 use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Support\Facades\Validator;
 
@@ -77,7 +79,9 @@ class FrontendController extends Controller
     }
 
     public function category(){
-        return view($this->theme . 'category');
+        $data['title']           = "Category";
+        $data['listingCategory'] = ListingCategory::with('details')->latest()->get();
+        return view($this->theme . 'category', $data);
     }
 
     public function listing_details(){
@@ -114,6 +118,31 @@ class FrontendController extends Controller
         return view($this->theme . 'blog', $data);
 
     }
+
+
+    // search tickets
+    public function categorySearch(Request $request){
+
+        $character = $request->character;
+
+        if ($character != null) {
+            
+            $data['listingCategory'] = ListingCategory::with('details')->whereHas('details', function($q) use ($character){
+                $q->where('name', 'LIKE', $character . '%');
+            })->latest()->get();
+
+        } else {
+            $data['listingCategory'] = ListingCategory::with('details')->latest()->get();
+        }
+
+        $count = $data['listingCategory']->count();
+
+        $view  = view($this->theme.'includes.listing.category', $data)->render();
+
+        return response()->json(['data' => $view , 'count' => $count]);
+    }
+
+
 
 
     public function blogDetails($slug = null, $id)

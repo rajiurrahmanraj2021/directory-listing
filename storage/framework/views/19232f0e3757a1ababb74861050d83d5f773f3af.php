@@ -13,7 +13,6 @@
                <div class="row g-lg-5">
                   <div class="col-lg-8">
                      <?php $__empty_1 = true; $__currentLoopData = $allBlogs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $blog): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-      
                         <div class="blog-box">
                            <div class="img-box">
                               <img
@@ -56,12 +55,6 @@
                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                      <?php endif; ?>
-
-                     <nav aria-label="Page navigation example mt-5">
-                        
-                        <?php echo e($allBlogs->links()); ?>
-
-                     </nav>
                   </div>
                   
                   <div class="col-lg-4">
@@ -113,6 +106,13 @@
                         </div>
 
                      </div>
+                  </div>
+
+                  <div class="col-lg-12 d-flex justify-content-center">
+                     <nav aria-label="Page navigation example mt-3">
+                           <?php echo e($allBlogs->links()); ?>
+
+                     </nav>
                   </div>
                </div>
             </div>

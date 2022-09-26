@@ -12,6 +12,8 @@ use App\Models\Content;
 use App\Models\ContentDetails;
 use App\Models\ContentMedia;
 use App\Models\Language;
+use App\Models\ListingCategory;
+use App\Models\ListingCategoryDetails;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
@@ -448,5 +450,103 @@ class ContentController extends Controller
         $blog->delete();
         return back()->with('success', 'Blog has been deleted');
     }
+
+    // Listing Category
+    public function listingCategoryList(){
+        $data['listingCategory'] = ListingCategory::with('details')->latest()->get();
+        return view('admin.listing.categoryList', $data);
+    }
+
+    public function listingCategoryCreate(){
+        $languages = Language::all();
+        return view('admin.listing.listingCategoryCreate', compact('languages'));
+    }
+
+    public function listingCategoryStore(Request $request, $language){
+
+        $purifiedData = Purify::clean($request->except('image', '_token', '_method'));
+
+        $rules = [
+            'name.*' => 'required|max:100',
+            'icon' => 'required|max:100',
+        ];
+
+        $message = [
+            'name.*.required' => 'Category name field is required',
+            'icon.required' => 'Icon field is required',
+        ];
+
+        $validate = Validator::make($purifiedData, $rules, $message);
+
+        if ($validate->fails()) {
+            return back()->withInput()->withErrors($validate);
+        }
+
+        $listingCategory = new ListingCategory();
+        $listingCategory->icon = $request->icon;
+        $listingCategory->save();
+
+        $listingCategory->details()->create([
+            'language_id' => $language,
+            'name'        => $purifiedData["name"][$language],
+        ]);
+
+        return redirect()->route('admin.listingCategory')->with('success', 'Listing Category Successfully Saved');
+
+    }
+
+    public function listingCategoryDelete($id){
+        $listingCategory = ListingCategory::findOrFail($id);
+        $listingCategory->delete();
+        return back()->with('success', 'Listing Category has been deleted');
+    }
+
+    public function listingCategoryEdit($id){
+        $data['languages']               = Language::all();
+        $data['listingCategoryDetails']  = ListingCategoryDetails::with('category')->where('listing_category_id', $id)->get()->groupBy('language_id');
+        return view('admin.listing.listingCategoryEdit', $data, compact('id'));
+    }
+
+    public function listingCategoryUpdate(Request $request, $id, $language_id)
+    {
+        $purifiedData = Purify::clean($request->except('image', '_token', '_method'));
+
+        if ($request->has('image')) {
+            $purifiedData['image'] = $request->image;
+        }
+
+        $rules = [
+            'name.*' => 'required|max:100',
+            'icon' => 'required|max:100',
+        ];
+
+        $message = [
+            'name.*.required' => 'Category name field is required',
+            'icon.required' => 'Icon field is required',
+        ];
+
+        $validate = Validator::make($purifiedData, $rules, $message);
+
+        if ($validate->fails()) {
+            return back()->withInput()->withErrors($validate);
+        }
+
+
+        $listingCategory = ListingCategory::findOrFail($id);
+        $listingCategory->icon = $request->icon;
+        $listingCategory->save();
+
+        $listingCategory->details()->updateOrCreate([
+            'language_id'   => $language_id
+        ],
+            [
+                'name'    => $purifiedData["name"][$language_id],
+            ]
+        );
+
+        return redirect()->route('admin.listingCategory')->with('success', 'Listing Category Successfully Updated');
+
+    }
+
 
 }

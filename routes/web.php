@@ -290,9 +290,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('blog-edit/{id}', 'Admin\ContentController@blogEdit')->name('blogEdit');
         Route::put('blog-update/{id}/{language?}', 'Admin\ContentController@blogUpdate')->name('blogUpdate');
         Route::delete('blog-delete/{id}', 'Admin\ContentController@blogDelete')->name('blogDelete');
-
         
+        /* ===== ADMIN Listing Category Manage ===== */
+        Route::get('listing-category', 'Admin\ContentController@listingCategoryList')->name('listingCategory');
+        Route::get('listing-category-create', 'Admin\ContentController@listingCategoryCreate')->name('listingCategoryCreate');
+        Route::post('listing-category-store/{language?}', 'Admin\ContentController@listingCategoryStore')->name('listingCategoryStore');
+        Route::get('listing-category-edit/{id}', 'Admin\ContentController@listingCategoryEdit')->name('listingCategoryEdit');
+        Route::put('/listing-category-update/{id}/{language?}', 'Admin\ContentController@listingCategoryUpdate')->name('listingCategoryUpdate');
 
+        Route::delete('listing-category-delete/{id}', 'Admin\ContentController@listingCategoryDelete')->name('listingCategoryDelete');
 
 
         Route::get('admin/blog/create', 'Admin\ContentController@blog_list')->name('blog.create');
@@ -328,6 +334,7 @@ Route::get('/blog-details/{slug}/{id}', 'FrontendController@blogDetails')->name(
 Route::get('category-wise-blog/{slug}/{id}', 'FrontendController@CategoryWiseBlog')->name('CategoryWiseBlog');
 
 Route::get('blog-search', 'FrontendController@blogSearch')->name('blogSearch');
+Route::post('category-search', 'FrontendController@categorySearch')->name('categorySearch');
 
 
 

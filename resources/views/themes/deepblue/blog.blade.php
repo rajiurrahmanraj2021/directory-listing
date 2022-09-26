@@ -13,7 +13,6 @@
                <div class="row g-lg-5">
                   <div class="col-lg-8">
                      @forelse ($allBlogs as $blog)
-      
                         <div class="blog-box">
                            <div class="img-box">
                               <img
@@ -53,27 +52,6 @@
                      @empty
 
                      @endforelse
-
-                     <nav aria-label="Page navigation example mt-5">
-                        {{-- <ul class="pagination justify-content-center mt-5">
-                           <li class="page-item disabled">
-                              <a class="page-link">Previous</a>
-                           </li>
-                           <li class="page-item active">
-                              <a class="page-link" href="#">1</a>
-                           </li>
-                           <li class="page-item">
-                              <a class="page-link" href="#">2</a>
-                           </li>
-                           <li class="page-item">
-                              <a class="page-link" href="#">3</a>
-                           </li>
-                           <li class="page-item">
-                              <a class="page-link" href="#">Next</a>
-                           </li>
-                        </ul> --}}
-                        {{ $allBlogs->links() }}
-                     </nav>
                   </div>
                   
                   <div class="col-lg-4">
@@ -124,6 +102,12 @@
                         </div>
 
                      </div>
+                  </div>
+
+                  <div class="col-lg-12 d-flex justify-content-center">
+                     <nav aria-label="Page navigation example mt-3">
+                           {{ $allBlogs->links() }}
+                     </nav>
                   </div>
                </div>
             </div>

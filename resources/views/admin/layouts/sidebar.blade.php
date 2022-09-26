@@ -371,6 +371,23 @@
                 </li>
 
                 <li class="list-divider"></li>
+                <li class="nav-small-cap"><span class="hide-menu">@lang('Manage Listing')</span></li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span class="hide-menu">@lang('Listing')</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level base-level-line">
+                        <li class="sidebar-item">
+                            <a href="{{route('admin.listingCategory')}}" class="sidebar-link">
+                                <span class="hide-menu">@lang('Category')</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="list-divider"></li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

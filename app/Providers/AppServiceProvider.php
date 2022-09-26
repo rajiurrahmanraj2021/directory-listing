@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        
         $data['basic'] = (object) config('basic');
         $data['theme'] = template();
         $data['themeTrue'] = template(true);
