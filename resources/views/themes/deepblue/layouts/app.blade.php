@@ -11,24 +11,27 @@
 
         <title>@yield('title')</title>
 
-        <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/assets/bootstrap/bootstrap.min.css') }}" />
+        <!-- bootstrap 5 -->
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/bootstrap.min.css') }}" />
         <!-- select 2 -->
-        <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/assets/plugins/select2/select2.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/select2.min.css') }}" />
         <!-- owl carousel -->
-        <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/assets/plugins/owlcarousel/animate.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/assets/plugins/owlcarousel/owl.carousel.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/assets/plugins/owlcarousel/owl.theme.default.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/animate.css') }}" />
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/owl.carousel.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/owl.theme.default.min.css') }}" />
         <!-- range slider -->
-        <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/assets/plugins/rangeslider/range-slider.css') }}" />
-        <!-- font awesome 5 -->
-        <script src="{{ asset('assets/themes/deepblue/assets/fontawesome/fontawesomepro.js') }}"></script>
-        <!---- Here is your Css Library----->
-        <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.scss')}}"/>
-        <!-- custom css -->
-        <link rel="stylesheet" href="{{ asset('assets/themes/deepblue/css/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/range-slider.css') }}" />
+        <!-- magnific popup -->
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/magnific-popup.css') }}"/>
+        <!-- xzoom -->
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/xzoom.min.css') }}" />
 
-        <!----  How to load Css Library, Here is an example ----->
-        {{--    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}"/>--}}
+        <!-- font awesome 5 -->
+        <script src="{{ asset($themeTrue.'js/fontawesomepro.js') }}"></script>
+
+        <!-- custom css -->
+        <link rel="stylesheet" href="{{ asset($themeTrue.'css/style.css') }}" />
+
         @stack('css-lib')
 
         <!----  Push your custom css  ----->
@@ -198,24 +201,26 @@
 
 
         <!-- bootstrap -->
-        <script src="{{ asset('assets/themes/deepblue/assets/bootstrap/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset($themeTrue.'js/bootstrap.bundle.min.js') }}"></script>
         <!-- jquery cdn -->
-        <script src="{{ asset('assets/themes/deepblue/assets/jquery/jquery-3.6.0.min.js') }}"></script>
+        <script src="{{ asset($themeTrue.'js/jquery-3.6.0.min.js') }}"></script>
         <!-- select 2 -->
-        <script src="{{ asset('assets/themes/deepblue/assets/plugins/select2/select2.min.js') }}"></script>
+        <script src="{{ asset($themeTrue.'js/select2.min.js') }}"></script>
         <!-- owl carousel -->
-        <script src="{{ asset('assets/themes/deepblue/assets/plugins/owlcarousel/owl.carousel.min.js') }}"></script>
+        <script src="{{ asset($themeTrue.'js/owl.carousel.min.js') }}"></script>
         <!-- range slider -->
-        <script src="{{ asset('assets/themes/deepblue/assets/plugins/rangeslider/range-slider.min.js') }}"></script>
+        <script src="{{ asset($themeTrue.'js/range-slider.min.js') }}"></script>
         <!-- leaflet js -->
         <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+    
         <!-- social share -->
-        <script src="{{ asset('assets/themes/deepblue/assets/plugins/socialjs/socialSharing.js') }}"></script>
+        <script src="{{ asset($themeTrue.'js/socialSharing.js') }}"></script>
         <!-- magnific popup -->
-        <script src="{{ asset('assets/themes/deepblue/assets/plugins/magnific-popup/magnific-popup.js') }}"></script>
+        <script src="{{ asset($themeTrue.'js/magnific-popup.js') }}"></script>
         <!-- xzoom -->
-        <script src="{{ asset('assets/themes/deepblue/assets/plugins/xZoom/xzoom.min.js') }}"></script>
-        
+        <script src="{{ asset($themeTrue.'js/xzoom.min.js') }}"></script>
+        <!-- custom script -->
+        <script src="{{ asset($themeTrue.'js/script.js') }}"></script>
 
         @stack('extra-js')
 
@@ -223,9 +228,7 @@
         <script src="{{asset('assets/global/js/pusher.min.js')}}"></script>
         <script src="{{asset('assets/global/js/vue.min.js')}}"></script>
         <script src="{{asset('assets/global/js/axios.min.js')}}"></script>
-        <!-- custom script -->
-        <script src="{{ asset('assets/themes/deepblue/js/script.js') }}"></script>
-
+        
         @stack('script')
 
         @auth

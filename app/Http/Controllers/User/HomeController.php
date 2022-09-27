@@ -57,6 +57,7 @@ class HomeController extends Controller
     }
 
 
+
     public function transaction()
     {
         $transactions = $this->user->transaction()->orderBy('id', 'DESC')->paginate(config('basic.paginate'));
@@ -686,6 +687,15 @@ class HomeController extends Controller
             $validator->errors()->add('addressVerification', '1');
             return redirect()->route('user.profile')->with('error', $e->getMessage())->withErrors($validator);
         }
+    }
+
+
+    public function listing(){
+        return view($this->theme . 'user.listing');
+    }
+
+    public function addListing(){
+        return view($this->theme . 'user.addListing');
     }
 
 

@@ -88,6 +88,10 @@ class FrontendController extends Controller
         return view($this->theme . 'listing_details');
     }
 
+    public function profile(){
+        return view($this->theme . 'profile');
+    }
+
 
     public function blog()
     {

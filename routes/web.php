@@ -39,11 +39,16 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'user', 'as' => 'user.'], fu
 
             Route::get('/dashboard', 'User\HomeController@index')->name('home');
 
+            // Listing
+            Route::get('all-listing', 'User\HomeController@listing')->name('allListing');
+            Route::get('add-listing', 'User\HomeController@addListing')->name('addListing');
+
+
             Route::get('add-fund', 'User\HomeController@addFund')->name('addFund');
             Route::post('add-fund', 'PaymentController@addFundRequest')->name('addFund.request');
             Route::get('addFundConfirm', 'PaymentController@depositConfirm')->name('addFund.confirm');
             Route::post('addFundConfirm', 'PaymentController@fromSubmit')->name('addFund.fromSubmit');
-
+            
 
             //transaction
             Route::get('/transaction', 'User\HomeController@transaction')->name('transaction');
@@ -327,8 +332,10 @@ Route::get('/', 'FrontendController@index')->name('home');
 Route::get('/about', 'FrontendController@about')->name('about');
 Route::get('/pricing', 'FrontendController@pricing')->name('pricing');
 Route::get('/listing', 'FrontendController@listing')->name('listing');
-Route::get('/category', 'FrontendController@category')->name('category');
 Route::get('/listing-details', 'FrontendController@listing_details')->name('listing-details');
+Route::get('/profile', 'FrontendController@profile')->name('profile');
+
+Route::get('/category', 'FrontendController@category')->name('category');
 Route::get('/blog', 'FrontendController@blog')->name('blog');
 Route::get('/blog-details/{slug}/{id}', 'FrontendController@blogDetails')->name('blogDetails');
 Route::get('category-wise-blog/{slug}/{id}', 'FrontendController@CategoryWiseBlog')->name('CategoryWiseBlog');
