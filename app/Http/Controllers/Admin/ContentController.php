@@ -15,6 +15,10 @@ use App\Models\Language;
 use App\Models\ListingCategory;
 use App\Models\ListingCategoryDetails;
 use Illuminate\Http\Request;
+use App\Models\Configure;
+use App\Models\Package;
+use App\Models\PackageDetails;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Validator;
 use Stevebauman\Purify\Facades\Purify;
@@ -547,6 +551,131 @@ class ContentController extends Controller
         return redirect()->route('admin.listingCategory')->with('success', 'Listing Category Successfully Updated');
 
     }
+
+    public function pricing(){
+        
+        return view('admin.pricing.index');
+    }
+
+    public function pricingCreate(){
+        $languages = Language::all();
+        $control = Configure::firstOrNew();
+        return view('admin.pricing.create', compact('languages', 'control'));
+    }
+
+    public function pricingStore(Request $request, $language=null){
+       
+        $purifiedData = Purify::clean($request->except('image', '_token', '_method'));
+
+        if ($request->has('image')) {
+            $purifiedData['image'] = $request->image;
+        }
+
+        $rules = [
+            'title.*'          => 'required',
+            'price'            => 'required|numeric|min:0',
+            'expiry_time'      => 'required|integer',
+            'is_image'         => 'required|boolean',
+            'is_video'         => 'required|boolean',
+            'is_amenities'     => 'required|boolean',
+            'is_product'       => 'required|boolean',
+            'is_business_hour' => 'required|boolean',
+
+            'no_of_listing'    => 'required_without:no_of_listing_unlimited|integer|not_in:0',
+
+            'no_of_listing_unlimited'    => 'required_without:no_of_listing|integer|in:-1',
+
+            'no_of_img_per_listing'    => 'required_without:no_of_img_per_listing_unlimited|integer|not_in:0',
+            'no_of_img_per_listing_unlimited'    => 'required_without:no_of_img_per_listing|integer|in:-1',
+
+            'no_of_amenities_per_listing'    => 'required_without:no_of_amenities_per_listing_unlimited|integer|not_in:0',
+            'no_of_amenities_per_listing_unlimited'    => 'required_without:no_of_amenities_per_listing|integer|in:-1',
+
+            'no_of_product'    => 'required_without:no_of_product_unlimited|integer|not_in:0',
+            'no_of_product_unlimited'    => 'required_without:no_of_product|integer|in:-1',
+
+            'no_of_img_per_product'    => 'required_without:no_of_img_per_product_unlimited|integer|not_in:0',
+            'no_of_img_per_product_unlimited'    => 'required_without:no_of_img_per_product|integer|in:-1',
+
+            'status'           => 'required',
+            'image'            => 'required|mimes:jpg,jpeg,png'
+        ];
+
+        $message = [
+            'title.*.required'            => 'Package title is required',
+            'price.required'              => 'Price field is required',
+            'expiry_time.required'        => 'Package expiry field is required',
+            'is_image.required'           => 'please select image field',
+            'is_video.required'           => 'please select video field',
+            'is_amenities.required'       => 'please select amenities field',
+            'is_product.required'         => 'please select product field',
+            'is_business_hour.required'   => 'please select business hour field',
+            'no_of_listing.required_without'  => 'No of listing field is required',
+            'no_of_listing_unlimited.required_without'      => 'No of listing field is required',
+            'no_of_img_per_listing.required_without'    => 'No of img per listing is required',
+            'no_of_img_per_listing_unlimited.required_without'    => 'No of img per listing is required',
+            'no_of_amenities_per_listing.required_without'      => 'No of amenities per listing is required',
+            'no_of_amenities_per_listing_unlimited.required_without'      => 'No of amenities per listing is required',
+            'no_of_product.required_without'      => 'No of product is required',
+            'no_of_product_unlimited.required_without'      => 'No of product is required',
+            'no_of_img_per_product.required_without'      => 'No of img per product is required',
+            'no_of_img_per_product_unlimited.required_without'      => 'No of img per product is required',
+            'status.required'      => 'Status is required',
+            'image.required'      => 'Image is required',
+        ];
+
+        
+
+        $validate = Validator::make($purifiedData, $rules, $message);
+
+        if ($validate->fails()) {
+            return back()->withInput()->withErrors($validate);
+        }
+    
+        $package = new Package();
+        
+        $package->price                           = $request->price;
+        $package->expiry_time                     = $request->expiry_time;
+        $package->expiry_time_type                = $request->expiry_time_type;
+        $package->is_image                        = $request->is_image;
+        $package->is_video                        = $request->is_video;
+        $package->is_amenities                    = $request->is_amenities;
+        $package->is_product                      = $request->is_product;
+        $package->is_business_hour                = $request->is_business_hour;
+
+
+
+        $package->no_of_listing                   = isset($request->no_of_listing_unlimited) && $request->no_of_listing_unlimited == -1 ? null : $request->no_of_listing;
+        $package->no_of_img_per_listing           = isset($request->no_of_img_per_listing_unlimited) && $request->no_of_img_per_listing_unlimited == -1 ? null : $request->no_of_img_per_listing;
+        $package->no_of_amenities_per_listing     = isset($request->no_of_amenities_per_listing_unlimited) && $request->no_of_amenities_per_listing_unlimited == -1 ? null : $request->no_of_amenities_per_listing;
+        
+        $package->no_of_product                   = isset($request->no_of_product_unlimited) && $request->no_of_product_unlimited == -1 ? null : $request->no_of_product;
+        $package->no_of_img_per_product           = isset($request->no_of_img_per_product_unlimited) && $request->no_of_img_per_product_unlimited == -1 ? null : $request->no_of_img_per_product;
+
+        $package->status                          = $request->status;
+
+
+        if ($request->hasFile('image')) {
+            try {
+                $package->image = $this->uploadImage($purifiedData['image'], config('location.pricing.path'), config('location.pricing.size'));
+            } catch (\Exception $exp) {
+                return back()->with('error', 'Image could not be uploaded.');
+            }
+        }
+
+        $package->save();
+
+
+
+        $package->details()->create([
+            'language_id'   => $language,
+            'title'         => $purifiedData["title"][$language],
+        ]);
+
+        return redirect()->route('admin.pricing')->with('success', 'Pricing Package Successfully Saved');
+    }
+
+
 
 
 }

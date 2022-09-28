@@ -302,8 +302,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('listing-category-store/{language?}', 'Admin\ContentController@listingCategoryStore')->name('listingCategoryStore');
         Route::get('listing-category-edit/{id}', 'Admin\ContentController@listingCategoryEdit')->name('listingCategoryEdit');
         Route::put('/listing-category-update/{id}/{language?}', 'Admin\ContentController@listingCategoryUpdate')->name('listingCategoryUpdate');
-
+        
         Route::delete('listing-category-delete/{id}', 'Admin\ContentController@listingCategoryDelete')->name('listingCategoryDelete');
+        
+        
+        /* ===== ADMIN Pricing Manage ===== */
+        Route::get('pricing', 'Admin\ContentController@pricing')->name('pricing');
+        Route::get('create-pricing', 'Admin\ContentController@pricingCreate')->name('pricingCreate');
+        Route::post('pricing-store/{language?}', 'Admin\ContentController@pricingStore')->name('pricingStore');
+
 
 
         Route::get('admin/blog/create', 'Admin\ContentController@blog_list')->name('blog.create');

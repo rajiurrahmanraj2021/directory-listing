@@ -344,9 +344,6 @@
      </div>
 
      <?php $__env->startPush('loadModal'); ?>
-            <!-- arrow up -->
-      <a href="#" class="scroll-up"><i class="fal fa-long-arrow-up"></i> </a>
-
       <!-- Modal -->
       <div
          class="modal fade"

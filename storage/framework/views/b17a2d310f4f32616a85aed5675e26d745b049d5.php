@@ -371,6 +371,7 @@
                 </li>
 
                 <li class="list-divider"></li>
+                
                 <li class="nav-small-cap"><span class="hide-menu"><?php echo app('translator')->get('Manage Listing'); ?></span></li>
 
                 <li class="sidebar-item">
@@ -387,6 +388,16 @@
                     </ul>
                 </li>
                 
+                <li class="list-divider"></li>
+
+                    <li class="nav-small-cap"><span class="hide-menu"><?php echo app('translator')->get('Pricing'); ?></span></li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="<?php echo e(route('admin.pricing')); ?>" aria-expanded="false">
+                            <i class="fas fa-envelope-open"></i>
+                            <span class="hide-menu"><?php echo app('translator')->get('Pricing List'); ?></span>
+                        </a>
+                    </li>
+
                 <li class="list-divider"></li>
             </ul>
         </nav>
