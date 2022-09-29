@@ -390,11 +390,11 @@
                 
                 <li class="list-divider"></li>
 
-                    <li class="nav-small-cap"><span class="hide-menu">@lang('Pricing')</span></li>
+                    <li class="nav-small-cap"><span class="hide-menu">@lang('Package')</span></li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{route('admin.pricing')}}" aria-expanded="false">
+                        <a class="sidebar-link" href="{{route('admin.package')}}" aria-expanded="false">
                             <i class="fas fa-envelope-open"></i>
-                            <span class="hide-menu">@lang('Pricing List')</span>
+                            <span class="hide-menu">@lang('Package List')</span>
                         </a>
                     </li>
 

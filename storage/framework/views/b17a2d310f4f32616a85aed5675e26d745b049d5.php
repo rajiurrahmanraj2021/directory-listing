@@ -390,11 +390,11 @@
                 
                 <li class="list-divider"></li>
 
-                    <li class="nav-small-cap"><span class="hide-menu"><?php echo app('translator')->get('Pricing'); ?></span></li>
+                    <li class="nav-small-cap"><span class="hide-menu"><?php echo app('translator')->get('Package'); ?></span></li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="<?php echo e(route('admin.pricing')); ?>" aria-expanded="false">
+                        <a class="sidebar-link" href="<?php echo e(route('admin.package')); ?>" aria-expanded="false">
                             <i class="fas fa-envelope-open"></i>
-                            <span class="hide-menu"><?php echo app('translator')->get('Pricing List'); ?></span>
+                            <span class="hide-menu"><?php echo app('translator')->get('Package List'); ?></span>
                         </a>
                     </li>
 

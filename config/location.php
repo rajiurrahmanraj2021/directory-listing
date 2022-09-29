@@ -21,8 +21,8 @@ return [
         'path' => 'assets/uploads/blogs/',
         'size' => '1918x1079'
     ],
-    'pricing' => [
-        'path' => 'assets/uploads/pricing/',
+    'package' => [
+        'path' => 'assets/uploads/package/',
         'size' => '64x64'
     ],
     'ticket' => [

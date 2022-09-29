@@ -14,6 +14,8 @@ use App\Models\BlogDetails;
 use Illuminate\Http\Request;
 use App\Models\ContentDetails;
 use App\Models\ListingCategory;
+use App\Models\Package;
+use App\Models\PackageDetails;
 use App\Models\ListingCategoryDetails;
 use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Support\Facades\Validator;
@@ -71,8 +73,11 @@ class FrontendController extends Controller
     }
 
     public function pricing(){
-        return view($this->theme . 'pricing');
+
+        $data['Packages'] = Package::with('details')->latest()->get();
+        return view($this->theme . 'pricing', $data);
     }
+
 
     public function listing(){
         return view($this->theme . 'listing');

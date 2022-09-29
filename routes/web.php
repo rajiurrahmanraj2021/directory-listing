@@ -281,20 +281,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::delete('contents/{id}', 'Admin\ContentController@contentDelete')->name('content.delete');
 
         /* ===== ADMIN Blog Manage ===== */
-        Route::get('blog-category', 'Admin\ContentController@categoryList')->name('blogCategory');
-        Route::get('blog-category-create', 'Admin\ContentController@blogCategoryCreate')->name('blogCategoryCreate');
-        Route::post('blog-category-store/{language?}', 'Admin\ContentController@blogCategoryStore')->name('blogCategoryStore');
-        Route::get('blog-category-edit/{id}', 'Admin\ContentController@blogCategoryEdit')->name('blogCategoryEdit');
-        Route::put('/blog-category-update/{id}/{language?}', 'Admin\ContentController@blogCategoryUpdate')->name('blogCategoryUpdate');
-        Route::delete('/blog-category-delete/{id}', 'Admin\ContentController@blogCategoryDelete')->name('blogCategoryDelete');
+        Route::get('blog-category', 'Admin\BlogController@categoryList')->name('blogCategory');
+        Route::get('blog-category-create', 'Admin\BlogController@blogCategoryCreate')->name('blogCategoryCreate');
+        Route::post('blog-category-store/{language?}', 'Admin\BlogController@blogCategoryStore')->name('blogCategoryStore');
+        Route::get('blog-category-edit/{id}', 'Admin\BlogController@blogCategoryEdit')->name('blogCategoryEdit');
+        Route::put('/blog-category-update/{id}/{language?}', 'Admin\BlogController@blogCategoryUpdate')->name('blogCategoryUpdate');
+        Route::delete('/blog-category-delete/{id}', 'Admin\BlogController@blogCategoryDelete')->name('blogCategoryDelete');
         
         
-        Route::get('blog-list', 'Admin\ContentController@blogList')->name('blogList');
-        Route::get('blog-create', 'Admin\ContentController@blogCreate')->name('blogCreate');
-        Route::post('blog-store/{language?}', 'Admin\ContentController@blogStore')->name('blogStore');
-        Route::get('blog-edit/{id}', 'Admin\ContentController@blogEdit')->name('blogEdit');
-        Route::put('blog-update/{id}/{language?}', 'Admin\ContentController@blogUpdate')->name('blogUpdate');
-        Route::delete('blog-delete/{id}', 'Admin\ContentController@blogDelete')->name('blogDelete');
+        Route::get('blog-list', 'Admin\BlogController@blogList')->name('blogList');
+        Route::get('blog-create', 'Admin\BlogController@blogCreate')->name('blogCreate');
+        Route::post('blog-store/{language?}', 'Admin\BlogController@blogStore')->name('blogStore');
+        Route::get('blog-edit/{id}', 'Admin\BlogController@blogEdit')->name('blogEdit');
+        Route::put('blog-update/{id}/{language?}', 'Admin\BlogController@blogUpdate')->name('blogUpdate');
+        Route::delete('blog-delete/{id}', 'Admin\BlogController@blogDelete')->name('blogDelete');
         
         /* ===== ADMIN Listing Category Manage ===== */
         Route::get('listing-category', 'Admin\ContentController@listingCategoryList')->name('listingCategory');
@@ -306,10 +306,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::delete('listing-category-delete/{id}', 'Admin\ContentController@listingCategoryDelete')->name('listingCategoryDelete');
         
         
-        /* ===== ADMIN Pricing Manage ===== */
-        Route::get('pricing', 'Admin\ContentController@pricing')->name('pricing');
-        Route::get('create-pricing', 'Admin\ContentController@pricingCreate')->name('pricingCreate');
-        Route::post('pricing-store/{language?}', 'Admin\ContentController@pricingStore')->name('pricingStore');
+        /* ===== ADMIN Package Manage ===== */
+        Route::get('package', 'Admin\PackageController@package')->name('package');
+        Route::get('create-package', 'Admin\PackageController@packageCreate')->name('packageCreate');
+        Route::post('package-store/{language?}', 'Admin\PackageController@packageStore')->name('packageStore');
+        Route::delete('package-delete/{id}', 'Admin\PackageController@packageDelete')->name('packageDelete');
+        Route::get('package-edit/{id}', 'Admin\PackageController@packageEdit')->name('packageEdit');
+        Route::put('package-update/{id}/{language?}', 'Admin\PackageController@packageUpdate')->name('packageUpdate');
 
 
 

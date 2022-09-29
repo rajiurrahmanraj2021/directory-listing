@@ -69,6 +69,9 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"> <?php echo e($basic->currency ?? 'USD'); ?> </span> 
+                                            </div>
                                             <div class="invalid-feedback">
                                                 <?php $__errorArgs = ['price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -80,11 +83,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="valid-feedback"></div>
-
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon2"> <?php echo e($basic->currency ?? 'USD'); ?> </span> 
-                                            </div>
                                         </div>
+                                        
                                     </div>
 
                                     <div class="form-group col-lg-4 col-md-4 col-sm-12 col-12 mb-3">
@@ -98,6 +98,14 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('expiry_time')); ?>">
+                                            <div class="input-group-append">
+                                                <select class="form-control expiry_time_type" id="expiry_time_type" name="expiry_time_type">
+                                                    <option value="Days"><?php echo app('translator')->get('Day(s)'); ?></option>
+                                                    <option value="Months"><?php echo app('translator')->get('Month(s)'); ?></option>
+                                                    <option value="Years"><?php echo app('translator')->get('Year(s)'); ?></option>
+                                                </select>
+                                                <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="expiry_time_unlimited" value="-1" id="expiry_time_unlimited" class="expiry_time_unlimited"></span> 
+                                            </div>
                                             <div class="invalid-feedback">
                                                 <?php $__errorArgs = ['expiry_time'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -109,14 +117,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="valid-feedback"></div>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo app('translator')->get('Day(S)'); ?></button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#" id="days"><?php echo app('translator')->get('Days'); ?></a>
-                                                    <input type="hidden" name="expiry_time_type" value="days" class="form-control expiry_time_type">
-                                                </div>
-                                            </div>
-                                     
                                         </div>
                                     </div>
                                 <?php endif; ?>
@@ -128,40 +128,40 @@ unset($__errorArgs, $__bag); ?>
                                     <div class="form-group col-lg-2 col-md-2 col-6">
                                         <label> <?php echo e(trans('Image')); ?></label>
                                         <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" value="0" name="is_image" id="image_yes"></span> 
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" value="1" name="is_image" id="image_no"></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" value="1" name="is_image" id="image_yes" checked></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" value="0" name="is_image" id="image_no"></span> 
                                         </div>
                                     </div>
                                     
                                     <div class="form-group col-lg-2 col-md-2 col-6">
                                         <label> <?php echo e(trans('Video')); ?></label>
                                         <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" name="is_video" id="video_yes" value="0"></span> 
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" name="is_video" id="video_no" value="1"></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" name="is_video" id="video_yes" value="1" checked></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" name="is_video" id="video_no" value="0"></span> 
                                         </div>
                                     </div>
 
                                     <div class="form-group col-lg-2 col-md-2 col-6">
                                         <label> <?php echo e(trans('Amenities')); ?></label>
                                         <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" id="amenities_yes" name="is_amenities" value="0"></span> 
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" id="amenities_no" name="is_amenities" value="1"></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" id="amenities_yes" name="is_amenities" value="1" checked></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" id="amenities_no" name="is_amenities" value="0"></span> 
                                         </div>
                                     </div>
 
                                     <div class="form-group col-lg-2 col-md-2 col-6">
                                         <label> <?php echo e(trans('Product')); ?></label>
                                         <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" name="is_product" id="product_yes" value="0"></span> 
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" name="is_product" id="product_no" value="1"></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" name="is_product" id="product_yes" value="1" checked></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" name="is_product" id="product_no" value="0"></span> 
                                         </div>
                                     </div>
                                     
                                     <div class="form-group col-lg-2 col-md-2 col-6">
                                         <label> <?php echo e(trans('Business Hour')); ?></label>
                                         <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" name="is_business_hour" id="business_yes" value="0"></span> 
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" name="is_business_hour" id="business_no" value="1"></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Yes'); ?></span> <input type="radio" name="is_business_hour" id="business_yes" value="1" checked></span> 
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('No'); ?></span> <input type="radio" name="is_business_hour" id="business_no" value="0"></span> 
                                         </div>
                                     </div>
                                 </div>
@@ -182,6 +182,10 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invali <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" aria-describedby="basic-addon2" value="<?php echo e(old('no_of_listing')); ?>">
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_listing_unlimited" value="-1" id="listing_unlimited" class="listing_unlimited"></span> 
+                                            </div>
                                             <div class="invalid-feedback">
                                                 <?php $__errorArgs = ['no_of_listing'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -193,10 +197,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="valid-feedback"></div>
-
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_listing_unlimited" value="-1" id="listing_unlimited" class="listing_unlimited"></span> 
-                                            </div>
                                         </div>
                                     </div>
 
@@ -211,6 +211,10 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" aria-describedby="basic-addon2">
+                                            
+                                            <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_img_per_listing_unlimited" value="-1" id="listing_img_unlimited" class="listing_img_unlimited"></span> 
+                                            </div>
                                             <div class="invalid-feedback">
                                                 <?php $__errorArgs = ['no_of_listing'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -222,10 +226,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="valid-feedback"></div>
-
-                                            <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_img_per_listing_unlimited" value="-1" id="listing_img_unlimited" class="listing_img_unlimited"></span> 
-                                            </div>
                                         </div>
                                     </div>
 
@@ -240,6 +240,10 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" aria-describedby="basic-addon2">
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_amenities_per_listing_unlimited" value="-1" id="amenities_unlimited" class="amenities_unlimited"></span> 
+                                            </div>
                                             <div class="invalid-feedback">
                                                 <?php $__errorArgs = ['no_of_amenities_per_listing'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -251,10 +255,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="valid-feedback"></div>
-
-                                            <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_amenities_per_listing_unlimited" value="-1" id="amenities_unlimited" class="amenities_unlimited"></span> 
-                                            </div>
                                         </div>
                                     </div>
 
@@ -274,6 +274,10 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" aria-describedby="basic-addon2" value="<?php echo e(old('no_of_product')); ?>">
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_product_unlimited" value="-1" id="product_unlimited" class="product_unlimited"></span> 
+                                            </div>
                                             <div class="invalid-feedback">
                                                 <?php $__errorArgs = ['no_of_product'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -285,10 +289,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="valid-feedback"></div>
-
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_product_unlimited" value="-1" id="product_unlimited" class="product_unlimited"></span> 
-                                            </div>
                                         </div>
                                     </div>
 
@@ -303,6 +303,10 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" aria-describedby="basic-addon2">
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_img_per_product_unlimited" value="-1" id="product_img_unlimited" class="product_img_unlimited"></span> 
+                                            </div>
                                             <div class="invalid-feedback">
                                                 <?php $__errorArgs = ['no_of_img_per_product'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -314,10 +318,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="valid-feedback"></div>
-
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon2"> <span class="mr-2"><?php echo app('translator')->get('Unlimited'); ?></span> <input type="checkbox" name="no_of_img_per_product_unlimited" value="-1" id="product_img_unlimited" class="product_img_unlimited"></span> 
-                                            </div>
                                         </div>
                                     </div>
 
@@ -384,20 +384,35 @@ unset($__errorArgs, $__bag); ?>
 
 
 <?php $__env->startPush('js'); ?>
- 
-    <?php if($errors->any()): ?>
-        <?php
-            $collection = collect($errors->all());
-            $errors = $collection->unique();
-        ?>
-        <script>
-            "use strict";
-            <?php $__currentLoopData = $errors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            Notiflix.Notify.Failure("<?php echo e(trans($error)); ?>");
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </script>
-    <?php endif; ?>
 
+    <script>
+
+        "use strict";
+        $(document).ready(function (e) {
+
+            $('#image').change(function () {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#image_preview_container').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+
+            $('.summernote').summernote({
+                height: 250,
+                callbacks: {
+                    onBlurCodeview: function() {
+                        let codeviewHtml = $(this).siblings('div.note-editor').find('.note-codable').val();
+                        $(this).val(codeviewHtml);
+                    }
+                }
+            });
+
+
+        });
+
+    </script>
+ 
     <script>
         'use strict'
        
@@ -499,6 +514,17 @@ unset($__errorArgs, $__bag); ?>
                     $('.no_of_product').attr('disabled', true);
                 } else{
                     $('.no_of_product').attr('disabled', false);
+                }
+            });
+
+            $(document).on('click','#expiry_time_unlimited', function(){
+
+                if ($(this).prop("checked")) {
+                    $('.expiry_time').attr('disabled', true);
+                    $('.expiry_time_type').attr('disabled', true);
+                } else{
+                    $('.expiry_time').attr('disabled', false);
+                    $('.expiry_time_type').attr('disabled', false);
                 }
             });
 

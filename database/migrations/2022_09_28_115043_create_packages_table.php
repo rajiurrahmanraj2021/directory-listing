@@ -28,8 +28,8 @@ class CreatePackagesTable extends Migration
             $table->integer('no_of_amenities_per_listing')->nullable();
             $table->integer('no_of_product')->nullable();
             $table->integer('no_of_img_per_product')->nullable();
-            $table->boolean('status');
-            $table->string('image');
+            $table->boolean('status')->default(1);
+            $table->string('image')->default(null);
             $table->timestamps();
         });
     }
